@@ -1,4 +1,5 @@
 package com.demo.POM.singleton
+
 import com.demo.POM.singleton.driver.WebDriverFactory
 import org.testng.annotations.AfterClass
 import org.testng.annotations.AfterMethod
@@ -24,7 +25,7 @@ class BaseTest {
 
 	protected def loadApplication() {
 		driver.manage().window().maximize();
-		driver.get((String) config.get("url"))
+		driver.get(config.url)
 	}
 
 	@AfterMethod(alwaysRun = true)
