@@ -30,8 +30,8 @@ class MobileDriver extends Driver {
 			caps.setCapability("deviceName", config.seleniumConfigs.mobile.deviceName)
 			caps.setCapability("platformName", config.seleniumConfigs.mobile.platform)
 			caps.setCapability('platformVersion', config.seleniumConfigs.mobile.platformVersion)
-			return (new AndroidDriver(new URL('http://'+config.seleniumConfigs.mobile.ip+':'
-				+config.seleniumConfigs.mobile.port+'/wd/hub'), caps))
+			return (new AndroidDriver(new URL("http://${config.seleniumConfigs.mobile.ip}:${config.seleniumConfigs.mobile.port}/wd/hub"),
+					caps))
 		}
 	}
 
