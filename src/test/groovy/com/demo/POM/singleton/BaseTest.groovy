@@ -21,7 +21,7 @@ class BaseTest {
 		/*eyes = new Eyes()
 		eyes.apiKey = "m1OxswNrSwo6Z72bqXzcaRs5TacSeQ8RcmbXlclUYFY110"
 		eyes.forceFullPageScreenshot = true
-        eyes.matchLevel = MatchLevel.LAYOUT2*/
+        eyes.setMatchLevel(MatchLevel.LAYOUT2)*/
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -30,7 +30,7 @@ class BaseTest {
 	}
 
 	protected def loadApplication() {
-        driver.manage().window().maximize();
+		//driver.manage().window().maximize();
 		driver.get(config.url)
 	}
 
@@ -42,6 +42,7 @@ class BaseTest {
 	@AfterClass(alwaysRun=true)
 	public void afterClass() {
         //eyes.abortIfNotClosed()
+		driver.close()
 		driver.quit()
 	}
 

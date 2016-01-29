@@ -19,7 +19,7 @@ seleniumConfigs {
 		ip = System.getProperty("SELENIUM_HOST", "localhost")
 		port = Integer.valueOf(System.getProperty("SELENIUM_PORT", "4444"))
 		browser = System.getProperty("BROWSER",'firefox')
-		version = '41'
+		version = '42'
 		platform = 'ANY'
 	}
 	mobile {
@@ -35,7 +35,7 @@ seleniumConfigs {
 		accessKey = ''
 		os = 'Windows 8'
 		browser = System.getProperty("BROWSER",'firefox')
-		browserVersion = '41'
+		browserVersion = '42'
 		onDemand {
 			server = 'ondemand.saucelabs.com'
 			port = '80'

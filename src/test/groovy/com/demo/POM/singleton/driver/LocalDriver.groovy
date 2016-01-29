@@ -31,7 +31,7 @@ class LocalDriver extends Driver {
 	@Override
 	WebDriver createDriver() {
 		def browser = config.seleniumConfigs.local.browser
-		//println "creating new ${browser} instance"
+
 		if(driver == null) {
 			String path
 			if(browser.toLowerCase().contains("firefox")) {
@@ -45,7 +45,7 @@ class LocalDriver extends Driver {
 				
 				// if the above if fails - i.e., the OS is not Windows
 				// then set the path of the chrome driver to chromedriver
-				path = createDriverIfDriverFileExists('chromedriver.exe')
+                path = createDriverIfDriverFileExists('chromedriver')
 
 				System.setProperty("webdriver.chrome.driver", path)
 				return new ChromeDriver()
