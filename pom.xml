@@ -28,6 +28,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -46,7 +50,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.18.1</version>
                 <configuration>
+                    <parallel>classesAndMethods</parallel>
+                    <threadCount>5</threadCount>
                     <systemProperties>
+                        <systemProperty>
+                            <name>URL</name>
+                            <value>http://www.stackoverflow.com</value>
+                        </systemProperty>
                         <systemProperty>
                             <name>BROWSER</name>
                             <value>firefox</value>
