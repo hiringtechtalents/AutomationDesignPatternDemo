@@ -41,11 +41,11 @@ class LocalDriver extends Driver {
 				// use the chromedriver.exe file for driver initialization
 				if (System.getProperty("os.name").contains("Windows")) {
 					path = createDriverIfDriverFileExists('chromedriver.exe')
+                } else {
+                    // if the OS is not Windows
+                    // then set the path of the chrome driver to chromedriver
+                    path = createDriverIfDriverFileExists('chromedriver')
 				}
-				
-				// if the above if fails - i.e., the OS is not Windows
-				// then set the path of the chrome driver to chromedriver
-                path = createDriverIfDriverFileExists('chromedriver')
 
 				System.setProperty("webdriver.chrome.driver", path)
 				return new ChromeDriver()
@@ -69,7 +69,7 @@ class LocalDriver extends Driver {
 	}
 
 	private String createDriverIfDriverFileExists(String driverFileName) {
-		def path = new File("lib/${driverFileName}")
+        def path = new File("${System.getProperty('user.dir')}/lib/${driverFileName}")
 		if(path.exists()) {
 			return path.toString()
 		} else {

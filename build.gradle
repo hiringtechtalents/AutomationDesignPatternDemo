@@ -23,7 +23,13 @@ sourceSets.main.groovy.srcDirs += ['src/main/java']*/
 
 tasks.withType(Test) {
 	useTestNG()
-	systemProperties = System.getProperties()
+	systemProperties = [
+			URL:System.getProperty('URL', 'http://www.stackoverflow.com'),
+	        BROWSER:System.getProperty('BROWSER', 'firefox'),
+			SELENIUM_HOST:System.getProperty('SELENIUM_HOST', 'localhost'),
+			SELENIUM_PORT:System.getProperty('SELENIUM_PORT', '4444'),
+			DRIVERTYPE:System.getProperty('DRIVERTYPE', 'local')
+	]
 	
 	maxParallelForks = 2
 }
