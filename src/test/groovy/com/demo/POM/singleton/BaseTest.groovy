@@ -42,8 +42,7 @@ class BaseTest {
 	@AfterClass(alwaysRun=true)
 	public void afterClass() {
         //eyes.abortIfNotClosed()
-		driver.close()
-		driver.quit()
+		WebDriverFactory.instance.closeDriver()
 	}
 
 }
