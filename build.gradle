@@ -22,7 +22,11 @@ dependencies {
 sourceSets.main.groovy.srcDirs += ['src/main/java']*/
 
 tasks.withType(Test) {
-	useTestNG()
+	useTestNG() {
+		// comment the below code to stop parallelization of tests.
+        parallel = 'tests'
+        threadCount = 5
+    }
 	systemProperties = [
 			URL:System.getProperty('URL', 'http://www.stackoverflow.com'),
 	        BROWSER:System.getProperty('BROWSER', 'firefox'),

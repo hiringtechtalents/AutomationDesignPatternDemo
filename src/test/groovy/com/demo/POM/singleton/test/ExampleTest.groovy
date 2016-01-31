@@ -11,10 +11,10 @@ class ExampleTest extends BaseTest{
 
     @Test
     void clickQuestionsTest() {
-        /*
+
         // initialize Eyes instance to the WebDriver instance
         // the parameters required are WebDriver instance, Application name, Test name, viewport size (optional).
-        eyes.open(driver, "Stackoverflow", "NavigateToQuestionsPage")*/
+        //eyes.open(driver, "Stackoverflow", "NavigateToQuestionsPage")
 
         HomePage homePage = PageFactory.initElements(driver, HomePage.class)
 
@@ -33,10 +33,10 @@ class ExampleTest extends BaseTest{
 
     @Test
     void isLogoDisplayedTest() {
-        /*
+
         // initialize Eyes instance to the WebDriver instance
         // the parameters required are WebDriver instance, Application name, Test name, viewport size (optional).
-        eyes.open(driver, "Stackoverflow", "isLogoDisplayedTest")*/
+        //eyes.open(driver, "Stackoverflow", "isLogoDisplayedTest")
 
         HomePage homePage = PageFactory.initElements(driver, HomePage.class)
 
