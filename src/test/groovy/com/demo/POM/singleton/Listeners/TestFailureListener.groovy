@@ -1,5 +1,6 @@
 package com.demo.POM.singleton.Listeners
 
+import com.demo.POM.singleton.FrameworkConfig
 import com.demo.POM.singleton.driver.WebDriverFactory
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.OutputType
@@ -16,6 +17,7 @@ class TestFailureListener implements ITestListener {
 
     WebDriver driver = null;
     def filePath = "${System.getProperty('user.dir')}/screenshots/";
+    def config = FrameworkConfig.instance.config
 
     /**
      * Invoked each time before a test will be invoked.
@@ -45,8 +47,10 @@ class TestFailureListener implements ITestListener {
      */
     @Override
     void onTestFailure(ITestResult result) {
-        println "^^^^^^ Error: ${result.name} test has failed!!! ^^^^^^"
-        takeScreenShot(result.name.trim())
+        if (config.take_screenshot) {
+            println "^^^^^^ Error: ${result.name} test has failed!!! ^^^^^^"
+            takeScreenShot(result.name.trim())
+        }
     }
 
     void takeScreenShot(String methodName) {
