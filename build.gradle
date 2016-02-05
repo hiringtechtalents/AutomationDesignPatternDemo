@@ -39,4 +39,9 @@ tasks.withType(Test) {
 	]
 	
 	maxParallelForks = 2
+
+    options {
+        listeners << "com.demo.POM.singleton.Listeners.TestFailureListener"
+    }
+
 }

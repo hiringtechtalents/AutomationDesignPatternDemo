@@ -111,3 +111,6 @@ buildNumber.properties
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
+
+# ignore screenshots and screenshot folder
+/screenshots/
