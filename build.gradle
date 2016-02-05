@@ -28,23 +28,15 @@ tasks.withType(Test) {
         threadCount = 5
     }
 	systemProperties = [
-			BROWSER      : System.getProperty('BROWSER', 'firefox'),
-			SELENIUM_HOST: System.getProperty('SELENIUM_HOST', 'localhost'),
-			SELENIUM_PORT: System.getProperty('SELENIUM_PORT', '4444'),
-			DRIVERTYPE   : System.getProperty('DRIVERTYPE', 'local')
+            BROWSER          : System.getProperty('BROWSER', 'firefox'),
+            SELENIUM_HOST    : System.getProperty('SELENIUM_HOST', 'localhost'),
+            SELENIUM_PORT    : System.getProperty('SELENIUM_PORT', '4444'),
+            DRIVERTYPE       : System.getProperty('DRIVERTYPE', 'local'),
+            SAUCE_USERNAME   : System.getProperty('SAUCE_USERNAME', 'sandeep-singh-79'),
+            SAUCE_ACCESS_KEY : System.getProperty('SAUCE_ACCESS_KEY', 'hIngLzBN7tzK4q+8mRTFt5vucVIGISGkfgJm/BTm8XY='),
+            SELENIUM_PLATFORM: System.getProperty('SELENIUM_PLATFORM', 'Windows 8'),
+            SELENIUM_VERSION : System.getProperty('SELENIUM_VERSION', '42')
 	]
 	
 	maxParallelForks = 2
 }
-
-/*task includegroup1(type: Test) {
-	useTestNG() {
-		includeGroups 'group1'
-	}
-}
-
-task excludegroup1(type: Test) {
-	useTestNG() {
-		excludeGroups 'group1'
-	}
-}*/

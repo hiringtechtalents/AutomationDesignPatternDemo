@@ -31,11 +31,14 @@ seleniumConfigs {
 		platformVersion = '4.4.2'
 	}
 	sauceLabs {
-		userName = ''
-		accessKey = ''
-		os = 'Windows 8'
+		// the various Sauce properties are introduced by the SauceLabs
+		// onDemand jenkins plugin. Using these to set the desired properties/capabilities
+		// Set default values if the properties are not supplied.
+		userName = System.getProperty('SAUCE_USERNAME', 'sandeep-singh-79')
+		accessKey = System.getProperty('SAUCE_ACCESS_KEY', 'hIngLzBN7tzK4q+8mRTFt5vucVIGISGkfgJm/BTm8XY=')
+		os = System.getProperty('SELENIUM_PLATFORM', 'Windows 8')
 		browser = System.getProperty("BROWSER",'firefox')
-		browserVersion = '42'
+		browserVersion = System.getProperty('SELENIUM_VERSION', '42')
 		onDemand {
 			server = 'ondemand.saucelabs.com'
 			port = '80'

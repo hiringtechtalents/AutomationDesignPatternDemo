@@ -1,12 +1,11 @@
 package com.demo.POM.singleton.driver
 
-import groovy.util.ConfigObject;
-
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 
-class SauceLabsDriver extends Driver {
+class SauceLabsDriver extends DriverType {
 	
 	public SauceLabsDriver() {
 		super()
@@ -39,10 +38,10 @@ class SauceLabsDriver extends Driver {
 		}
 		capabilities.setCapability("platform", platform)
 		capabilities.setCapability("version", version)
-		this.driver = new RemoteWebDriver(
+		driver = new RemoteWebDriver(
 				new URL('http://${userName}:${accessKey}@${server}:${port}/wd/hub'), capabilities)
-			
-		return this.driver
+
+		return driver
 	}
 
 }

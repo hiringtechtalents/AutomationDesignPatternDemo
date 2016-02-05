@@ -4,10 +4,9 @@
  */
 package com.demo.POM.singleton.driver
 
-import groovy.util.ConfigSlurper;
-
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 
@@ -15,7 +14,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
  * @author SANDEEP
  *
  */
-class RemoteDriver extends Driver {
+class RemoteDriver extends DriverType {
 	
 	public RemoteDriver() {
 		super()

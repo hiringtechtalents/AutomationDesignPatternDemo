@@ -12,7 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
  * @author SANDEEP
  *
  */
-class MobileDriver extends Driver {
+class MobileDriver extends DriverType {
 	//DesiredCapabilities caps
 	
 	public MobileDriver() {

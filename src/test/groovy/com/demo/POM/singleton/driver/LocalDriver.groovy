@@ -15,7 +15,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
  * @author SANDEEP
  *
  */
-class LocalDriver extends Driver {
+class LocalDriver extends DriverType {
 	
 	public LocalDriver() {
 		super()

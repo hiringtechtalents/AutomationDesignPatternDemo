@@ -73,6 +73,22 @@
                             <name>DRIVERTYPE</name>
                             <value>local</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>SAUCE_USERNAME</name>
+                            <value>sandeep-singh-79</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SAUCE_ACCESS_KEY</name>
+                            <value>hIngLzBN7tzK4q+8mRTFt5vucVIGISGkfgJm/BTm8XY=</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SELENIUM_PLATFORM</name>
+                            <value>Windows 8</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SELENIUM_VERSION</name>
+                            <value>42</value>
+                        </systemProperty>
                     </systemProperties>
                 </configuration>
             </plugin>
