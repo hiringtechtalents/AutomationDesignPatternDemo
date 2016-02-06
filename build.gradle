@@ -14,7 +14,7 @@ dependencies {
 	compile 'com.google.inject:guice:3.0'
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
-    compile 'org.testng:testng:6.8.1'
+    compile 'org.testng:testng:6.8.5'
 	//compile 'com.applitools:eyes-selenium-java:2.22'
 }
 

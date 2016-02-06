@@ -10,13 +10,15 @@ import org.testng.ITestContext
 import org.testng.ITestListener
 import org.testng.ITestResult
 
+import java.text.SimpleDateFormat
+
 /**
  * Created by SANDEEP on 2/5/2016.
  */
 class TestFailureListener implements ITestListener {
 
     WebDriver driver = null;
-    def filePath = "${System.getProperty('user.dir')}/screenshots/";
+    def filePath = "${System.getProperty('user.dir')}/screenshots/${getDateTime()}/";
     def config = FrameworkConfig.instance.config
 
     /**
@@ -49,17 +51,11 @@ class TestFailureListener implements ITestListener {
     void onTestFailure(ITestResult result) {
         if (config.take_screenshot) {
             println "^^^^^^ Error: ${result.name} test has failed!!! ^^^^^^"
+
             takeScreenShot(result.name.trim())
+
+            println "^^^^^^ Placed screenshot in ${filePath} directory ^^^^^^"
         }
-    }
-
-    void takeScreenShot(String methodName) {
-        driver = WebDriverFactory.instance.getDriver(System.getProperty("DRIVERTYPE", "local"))
-        def scrShotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
-
-        FileUtils.copyFile(scrShotFile, new File("${filePath}${methodName}${scrShotFile.name}"))
-
-        println "^^^^^^ Placed screenshot in ${filePath} directory ^^^^^^"
     }
 /**
  * Invoked each time a test is skipped.
@@ -94,4 +90,20 @@ class TestFailureListener implements ITestListener {
      */
     @Override
     void onFinish(ITestContext context) {}
+
+    private void takeScreenShot(String methodName) {
+        driver = WebDriverFactory.instance.getDriver(System.getProperty("DRIVERTYPE", "local"))
+        def scrShotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
+
+        FileUtils.copyFile(scrShotFile, new File("${filePath}${methodName}${scrShotFile.name}"))
+    }
+
+    private def getDateTime() {
+        def now = new Date();
+        def strDate = new SimpleDateFormat("dd-MM-yyyy").format(now);
+        def strTime = new SimpleDateFormat("HH:mm:ss").format(now);
+        strTime = strTime.replace(":", "-");
+
+        "D" + strDate + "_T" + strTime;
+    }
 }

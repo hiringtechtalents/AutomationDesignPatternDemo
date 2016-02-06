@@ -1,7 +1,7 @@
 url = 'http://stackoverflow.com'
 
 // the setting is useful if we need to take a screenshot after every action
-take_screenshot = false
+take_screenshot = true
 
 // timeout for implicit and webdriverwait
 WEBDRIVERWAIT_TIMEOUT = 30
