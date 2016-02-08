@@ -1,4 +1,4 @@
-package com.demo.POM.singleton
+package com.demo.POM.singleton.base
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver

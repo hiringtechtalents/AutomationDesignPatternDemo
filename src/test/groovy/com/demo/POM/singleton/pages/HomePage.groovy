@@ -1,6 +1,6 @@
 package com.demo.POM.singleton.pages
 
-import com.demo.POM.singleton.BasePageObject
+import com.demo.POM.singleton.base.BasePageObject
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement

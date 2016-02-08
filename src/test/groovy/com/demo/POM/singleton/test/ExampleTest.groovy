@@ -1,6 +1,6 @@
 package com.demo.POM.singleton.test
 
-import com.demo.POM.singleton.BaseTest
+import com.demo.POM.singleton.base.BaseTest
 import com.demo.POM.singleton.pages.HomePage
 import com.demo.POM.singleton.pages.QuestionsPage
 import org.openqa.selenium.support.PageFactory

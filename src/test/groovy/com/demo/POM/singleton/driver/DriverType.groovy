@@ -1,6 +1,6 @@
 package com.demo.POM.singleton.driver
 
-import com.demo.POM.singleton.FrameworkConfig
+import com.demo.POM.singleton.base.FrameworkConfig
 import org.openqa.selenium.WebDriver
 
 /**

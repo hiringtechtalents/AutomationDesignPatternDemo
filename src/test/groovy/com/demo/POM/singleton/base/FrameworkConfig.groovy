@@ -1,4 +1,4 @@
-package com.demo.POM.singleton
+package com.demo.POM.singleton.base
 
 class FrameworkConfig implements Cloneable {
 	

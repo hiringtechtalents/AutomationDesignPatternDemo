@@ -1,4 +1,4 @@
-package com.demo.POM.singleton
+package com.demo.POM.singleton.base
 
 import com.demo.POM.singleton.driver.WebDriverFactory
 import org.testng.annotations.AfterClass

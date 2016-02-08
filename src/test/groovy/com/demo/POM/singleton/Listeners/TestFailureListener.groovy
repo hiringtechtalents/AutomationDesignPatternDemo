@@ -1,6 +1,6 @@
 package com.demo.POM.singleton.Listeners
 
-import com.demo.POM.singleton.FrameworkConfig
+import com.demo.POM.singleton.base.FrameworkConfig
 import com.demo.POM.singleton.driver.WebDriverFactory
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.OutputType
