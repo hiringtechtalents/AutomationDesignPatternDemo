@@ -2,6 +2,7 @@ package com.demo.POM.singleton.Listeners
 
 import com.demo.POM.singleton.base.FrameworkConfig
 import com.demo.POM.singleton.driver.WebDriverFactory
+import groovy.util.logging.Slf4j
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
@@ -15,6 +16,8 @@ import java.text.SimpleDateFormat
 /**
  * Created by SANDEEP on 2/5/2016.
  */
+
+@Slf4j
 class TestFailureListener implements ITestListener {
 
     WebDriver driver = null;
@@ -49,12 +52,15 @@ class TestFailureListener implements ITestListener {
      */
     @Override
     void onTestFailure(ITestResult result) {
+        log.info("Entering onTestFailure() method of the listener %s", this.class.simpleName)
+
         if (config.take_screenshot) {
-            println "^^^^^^ Error: ${result.name} test has failed!!! ^^^^^^"
+            log.info("config.take_screenshot set to ${config.take_screenshot}")
+            log.info("^^^^^^ Error: ${result.name} test has failed!!! ^^^^^^")
 
             takeScreenShot(result.name.trim())
 
-            println "^^^^^^ Placed screenshot in ${filePath} directory ^^^^^^"
+            log.info("^^^^^^ Placed screenshot in ${filePath} directory ^^^^^^")
         }
     }
 /**
@@ -92,18 +98,24 @@ class TestFailureListener implements ITestListener {
     void onFinish(ITestContext context) {}
 
     private void takeScreenShot(String methodName) {
+        log.info("Entering takeScreenShot method with the parameter methodName: ${methodName}")
         driver = WebDriverFactory.instance.getDriver(System.getProperty("DRIVERTYPE", "local"))
         def scrShotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
 
         FileUtils.copyFile(scrShotFile, new File("${filePath}${methodName}${scrShotFile.name}"))
+
+        log.info("Exiting method takeScreenShot")
     }
 
     private def getDateTime() {
+        log.info("Entering method getDateTime")
         def now = new Date();
-        def strDate = new SimpleDateFormat("dd-MM-yyyy").format(now);
-        def strTime = new SimpleDateFormat("HH:mm:ss").format(now);
-        strTime = strTime.replace(":", "-");
+        def strDate = new SimpleDateFormat("dd-MM-yyyy").format(now)
+        /*def strTime = new SimpleDateFormat("HH:mm:ss").format(now);
+        strTime = strTime.replace(":", "-");*/
 
-        "D" + strDate + "_T" + strTime;
+        log.info("formatted date value: ${strDate}")
+        log.info("return value: D${strDate}")
+        "D${strDate}"
     }
 }

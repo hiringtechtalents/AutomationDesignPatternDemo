@@ -22,6 +22,7 @@ abstract class BasePageObject {
 
         log.info("Calling isLoaded method to validate if the page is loaded.")
 		isLoaded();
+
         log.info(String.format("Exiting %s constructor", this.class.simpleName))
 	}
 	
