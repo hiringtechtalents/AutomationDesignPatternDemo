@@ -10,7 +10,7 @@
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <prudent>true</prudent>
-        <file>${user.dir}/log/%d{yyyy-MM}/SingletonPatternLog.%d{yyyy-MM-dd}.%i.log</file>
+        <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>${user.dir}/log/SingletonPatternLog.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
