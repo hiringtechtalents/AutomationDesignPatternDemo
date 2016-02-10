@@ -3,6 +3,9 @@ url = 'http://stackoverflow.com'
 // the setting is useful if we need to take a screenshot after every action
 take_screenshot = true
 
+// can turn off logging completely or set it to a particular level.
+LOGROOTLEVEL = System.getProperty('LOGROOTLEVEL', 'DEBUG')
+
 // timeout for implicit and webdriverwait
 WEBDRIVERWAIT_TIMEOUT = 30
 IMPLICITWAIT_TIMEOUT = 10

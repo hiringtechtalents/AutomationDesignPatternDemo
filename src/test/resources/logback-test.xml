@@ -1,4 +1,4 @@
-<configuration>
+<configuration debug="false">
 
     <!-- appender definitions for both console and file appenders.-->
     <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -27,7 +27,7 @@
         </encoder>
     </appender>
 
-    <root level="debug">
+    <root level="${LOGROOTLEVEL}">
         <!--<appender-ref ref="STDOUT" /> -->
         <appender-ref ref="FILE"/>
     </root>

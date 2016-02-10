@@ -89,6 +89,10 @@
                             <name>SELENIUM_VERSION</name>
                             <value>42</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>LOGROOTLEVEL</name>
+                            <value>DEBUG</value>
+                        </systemProperty>
                     </systemProperties>
                     <properties>
                         <property>
