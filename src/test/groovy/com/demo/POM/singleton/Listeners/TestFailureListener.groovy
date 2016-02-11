@@ -6,13 +6,11 @@ import groovy.util.logging.Slf4j
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
-import org.openqa.selenium.WebDriver
 import org.testng.ITestContext
 import org.testng.ITestListener
 import org.testng.ITestResult
 
 import java.text.SimpleDateFormat
-
 /**
  * Created by SANDEEP on 2/5/2016.
  */
@@ -20,9 +18,9 @@ import java.text.SimpleDateFormat
 @Slf4j
 class TestFailureListener implements ITestListener {
 
-    WebDriver driver = null;
-    def filePath = "${System.getProperty('user.dir')}/screenshots/${getDateTime()}/";
-    def config = FrameworkConfig.instance.config
+    private def driver = null;
+    private def filePath = "${System.getProperty('user.dir')}/screenshots/${getDateTime()}/";
+    private def config = FrameworkConfig.instance.config
 
     /**
      * Invoked each time before a test will be invoked.
