@@ -52,11 +52,11 @@ class RemoteDriver extends DriverType {
 				throw new RuntimeException("Browser type unsupported")
 			}
 		} else { return driver }
-		
-		capabilities.setVersion(version)
-		capabilities.setPlatform(Platform.fromString(platform))
 
-        log.info("creating RemoteWebDriver instance with url: http://${hostAddress}:${hostPort}/wd/hub")
+		capabilities.version = version
+		capabilities.platform = Platform.fromString(platform)
+
+		log.info("creating RemoteWebDriver instance with url: http://${hostAddress}:${hostPort}/wd/hub")
         log.info("and capabilities: ${capabilities.getVersion()}, ${capabilities.getPlatform()}")
 		return (new RemoteWebDriver(
 				new URL("http://${hostAddress}:${hostPort}/wd/hub"), capabilities))

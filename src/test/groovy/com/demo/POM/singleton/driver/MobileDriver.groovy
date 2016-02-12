@@ -39,7 +39,7 @@ class MobileDriver extends DriverType {
 			caps.setCapability(MobileCapabilityType.DEVICE_NAME, config.seleniumConfigs.mobile.deviceName)
 			caps.setCapability(MobileCapabilityType.PLATFORM, config.seleniumConfigs.mobile.platform)
 			caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, config.seleniumConfigs.mobile.platformVersion)
-            StringBuilder strCaps = "The following capabilities set for AndroidDriver:" +
+			def strCaps = "The following capabilities set for AndroidDriver:" +
                     "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
                     "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
                     "${caps.getVersion()}."

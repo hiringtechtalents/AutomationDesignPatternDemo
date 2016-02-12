@@ -57,13 +57,13 @@ class LocalDriver extends DriverType {
 
 				System.setProperty("webdriver.chrome.driver", path)
 				return new ChromeDriver()
-			} else if(browser.toLowerCase().contains("internet")) {
+            } else if (browser.toLowerCase().contains("internet") && System.getProperty("os.name").contains("Windows")) {
                 log.info("browser IE requested. creating instance ...")
-				if (System.getProperty("os.name").contains("Windows")) {
-					path = createDriverIfDriverFileExists("IEDriverServer.exe")
-                    log.info("path of IEDriver executable: ${path}")
-				}
-				System.setProperty("webdriver.ie.driver", path)
+
+                path = createDriverIfDriverFileExists("IEDriverServer.exe")
+                log.info("path of IEDriver executable: ${path}")
+
+                System.setProperty("webdriver.ie.driver", path)
 				DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer()
 				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
 				return new InternetExplorerDriver(capabilities)
@@ -81,9 +81,9 @@ class LocalDriver extends DriverType {
 		}
 	}
 
-	private String createDriverIfDriverFileExists(String driverFileName) {
+    private createDriverIfDriverFileExists = { String driverFileName ->
         def path = new File("${System.getProperty('user.dir')}/lib/${driverFileName}")
-		if(path.exists()) {
+        if (path.exists()) {
 			return path.toString()
 		} else {
             log.info("${driverFileName} file could not be found at location: lib")

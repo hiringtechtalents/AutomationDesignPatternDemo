@@ -10,8 +10,6 @@ import org.openqa.selenium.support.PageFactory
 
 @Slf4j
 class HomePage extends BasePageObject {
-	@FindBy(css="div#menus")
-	List<WebElement> menuBar
 
 	@FindBy(id="nav-questions")
 	WebElement questionLink
@@ -35,13 +33,15 @@ class HomePage extends BasePageObject {
         questionLink.click()
 
         log.info("return value: QuestionsPage")
-        return PageFactory.initElements(this.driver, QuestionsPage.class)
+
+        PageFactory.initElements(this.driver, QuestionsPage.class)
     }
 
     def isQuestionsTabDisplayed() {
         log.info("Entering isQuestionsTabDisplayed method")
         log.info("return value: questionsTab.size() > 0: ${questionsTab.size() > 0}")
-        return questionsTab.size() > 0
+
+        questionsTab.size() > 0
     }
 
 }

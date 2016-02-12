@@ -10,9 +10,6 @@ import org.openqa.selenium.support.FindBy
 @Slf4j
 class QuestionsPage extends BasePageObject {
 
-	@FindBy(css=".youarehere #nav-questions")
-	WebElement youAreHere
-
 	@FindBy(id="nav-users")
 	List<WebElement> usersTab
 
@@ -23,13 +20,15 @@ class QuestionsPage extends BasePageObject {
 	@Override
 	protected By getUniqueElement() {
         log.info("Look for unique element .youarehere #nav-questions for page ${this.class.simpleName}")
-        return By.cssSelector(".youarehere #nav-questions")
+
+        By.cssSelector(".youarehere #nav-questions")
 	}
 
 	def isUsersTabDisplayed() {
         log.info("Entering isUsersTabDisplayed method")
         log.info("return value: usersTab.size() > 0: ${usersTab.size() > 0}")
-        return usersTab.size() > 0
+
+        usersTab.size() > 0
 	}
 
 }

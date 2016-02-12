@@ -29,16 +29,16 @@ public final class WebDriverFactory {
                 switch (driverType) {
                     case "local":
                         log.info("In local driver type case block")
-                        return getLocalDriverInstance()
+                        return getLocalDriverInstance() as WebDriver
                     case "remote":
                         log.info("In remote driver type case block")
-                        return getRemoteDriverInstance()
+                        return getRemoteDriverInstance() as WebDriver
                     case "mobile":
                         log.info("In mobile driver type case block")
-                        return getMobileDriverInstance()
+                        return getMobileDriverInstance() as WebDriver
                     case "saucelabs":
                         log.info("In saucelabs driver type case block")
-                        return getSauceLabsDriverInstance()
+                        return getSauceLabsDriverInstance() as WebDriver
                     default:
                         log.info("UnSupported driver type requested: ${driverType}")
                         throw new RuntimeException("UnSupported driver type requested: ${driverType}")
@@ -47,7 +47,8 @@ public final class WebDriverFactory {
         }
 
         log.info("exiting getDriver method of ${this.class.simpleName} class")
-        return driver.get()
+
+        driver.get()
 	}
 
     private def getLocalDriverInstance() {
