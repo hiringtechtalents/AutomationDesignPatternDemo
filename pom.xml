@@ -97,7 +97,7 @@
                     <properties>
                         <property>
                             <name>listener</name>
-                            <value>com.demo.POM.singleton.Listeners.TestFailureListener</value>
+                            <value>com.demo.POM.singleton.Listeners.TestEventsListener</value>
                         </property>
                     </properties>
                 </configuration>
@@ -151,6 +151,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.saucelabs</groupId>
+            <artifactId>sauce_testng</artifactId>
+            <version>2.1.18</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

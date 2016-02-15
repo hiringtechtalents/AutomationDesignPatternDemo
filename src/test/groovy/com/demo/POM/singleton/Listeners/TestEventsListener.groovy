@@ -1,25 +1,29 @@
 package com.demo.POM.singleton.Listeners
 
 import com.demo.POM.singleton.base.FrameworkConfig
+import com.demo.POM.singleton.driver.SauceLabsDriver
 import com.demo.POM.singleton.driver.WebDriverFactory
+import com.saucelabs.saucerest.SauceREST
 import groovy.util.logging.Slf4j
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.testng.ITestContext
 import org.testng.ITestListener
 import org.testng.ITestResult
 
 import java.text.SimpleDateFormat
+
 /**
  * Created by SANDEEP on 2/5/2016.
  */
 
 @Slf4j
-class TestFailureListener implements ITestListener {
+class TestEventsListener implements ITestListener {
 
-    private def driver = null;
-    private def filePath = "${System.getProperty('user.dir')}/screenshots/${getDateTime()}/";
+    private def driver = WebDriverFactory.instance.getDriver(System.getProperty("DRIVERTYPE", "local"))
+    private def filePath = "${System.getProperty('user.dir')}/screenshots/${getDateTime()}/"
     private def config = FrameworkConfig.instance.config
 
     /**
@@ -40,7 +44,37 @@ class TestFailureListener implements ITestListener {
      * @see ITestResult#SUCCESS
      */
     @Override
-    void onTestSuccess(ITestResult result) {}
+    void onTestSuccess(ITestResult result) {
+        log.info("test Successful ...")
+        log.info("test (System.getProperty('DRIVERTYPE').equals('sauce')) is: ${System.getProperty('DRIVERTYPE').equals('sauce')}")
+        if (System.getProperty('DRIVERTYPE').equals('sauce')) {
+            updateSauceResults(result)
+        }
+    }
+
+    private updateSauceResults(ITestResult result) {
+        log.info("Entering updateSauceResults method with ITestResult parameter from the calling method")
+
+        def userName = config.seleniumConfigs.sauceLabs.userName
+        def accessKey = config.seleniumConfigs.sauceLabs.accessKey
+
+        def jobID = ((RemoteWebDriver) driver).getSessionId().toString()
+        log.info("SauceLabs jobID: ${jobID}")
+        def client = new SauceREST(userName, accessKey)
+        log.info("created SauceREST client with SauceLabs username and access key")
+        def sauceJob = ["name": "Test method: ${result.getMethod().getMethodName()}"]
+
+        log.info("result.isSuccess: ${result.isSuccess()}")
+        if (result.isSuccess()) {
+            log.info("setting SauceLabs job ${jobID} as passed ...")
+            client.jobPassed(jobID)
+        } else {
+            log.info("setting SauceLabs job ${jobID} as failed ...")
+            client.jobFailed(jobID)
+        }
+
+        log.info("Exiting updateSauceResults method ...")
+    }
 
     /**
      * Invoked each time a test fails. Responsible for taking screenshots every time the test fails
@@ -50,7 +84,8 @@ class TestFailureListener implements ITestListener {
      */
     @Override
     void onTestFailure(ITestResult result) {
-        log.info("Entering onTestFailure() method of the listener %s", this.class.simpleName)
+        log.info("Test failed ...")
+        log.info("In onTestFailure() method of the listener %s", this.class.simpleName)
 
         if (config.take_screenshot) {
             log.info("config.take_screenshot set to ${config.take_screenshot}")
@@ -59,6 +94,13 @@ class TestFailureListener implements ITestListener {
             takeScreenShot(result.name.trim())
 
             log.info("^^^^^^ Placed screenshot in ${filePath} directory ^^^^^^")
+        }
+
+        // mark the test as failed in saucelabs provided the driver is instance of SauceLabsDriver
+        log.info("test driver instanceof SauceLabsDriver is: ${driver instanceof SauceLabsDriver}")
+        if (driver instanceof SauceLabsDriver) {
+            log.info("updating SauceLabs result for test failure ...")
+            updateSauceResults(result)
         }
     }
 /**
@@ -97,7 +139,7 @@ class TestFailureListener implements ITestListener {
 
     private void takeScreenShot(String methodName) {
         log.info("Entering takeScreenShot method with the parameter methodName: ${methodName}")
-        driver = WebDriverFactory.instance.getDriver(System.getProperty("DRIVERTYPE", "local"))
+
         def scrShotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
 
         FileUtils.copyFile(scrShotFile, new File("${filePath}${methodName}${scrShotFile.name}"))
