@@ -31,7 +31,7 @@ class SauceLabsDriver extends DriverType {
 				capabilities = DesiredCapabilities.firefox()
 			} else if(browser.equalsIgnoreCase('chrome')) {
 				capabilities = DesiredCapabilities.chrome()
-			} else if(browser.equalsIgnoreCase('internetExplorer')) {
+			} else if (browser.contains('internet')) {
 				capabilities = DesiredCapabilities.internetExplorer()
 				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
 			} else if(browser.equalsIgnoreCase('safari')) {
