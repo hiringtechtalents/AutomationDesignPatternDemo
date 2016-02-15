@@ -37,7 +37,7 @@ seleniumConfigs {
 		// onDemand jenkins plugin. Using these to set the desired properties/capabilities
 		// Set default values if the properties are not supplied.
 		userName = System.getProperty('SAUCE_USERNAME', 'sandeep-singh-79')
-		accessKey = System.getProperty('SAUCE_ACCESS_KEY', 'hIngLzBN7tzK4q+8mRTFt5vucVIGISGkfgJm/BTm8XY=')
+		accessKey = System.getProperty('SAUCE_ACCESS_KEY', '7408dd07-3b3f-4b1e-95e1-f8676852922a')
 		os = System.getProperty('SELENIUM_PLATFORM', 'Windows 8')
 		browser = System.getProperty("BROWSER",'firefox')
 		browserVersion = System.getProperty('SELENIUM_VERSION', '42')

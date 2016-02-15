@@ -36,7 +36,7 @@ public final class WebDriverFactory {
                     case "mobile":
                         log.info("In mobile driver type case block")
                         return getMobileDriverInstance() as WebDriver
-                    case "saucelabs":
+                    case "sauce":
                         log.info("In saucelabs driver type case block")
                         return getSauceLabsDriverInstance() as WebDriver
                     default:
