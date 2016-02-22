@@ -11,10 +11,10 @@ import org.openqa.selenium.support.PageFactory
 @Slf4j
 class HomePage extends BasePageObject {
 
-	@FindBy(id="nav-questions")
+    @FindBy(css = ".nav > ul > li")
 	WebElement questionLink
-	
-	@FindBy(id="nav-questions")
+
+    @FindBy(css = ".nav > ul > li")
 	List<WebElement> questionsTab
 
     HomePage(WebDriver driver) {
@@ -23,8 +23,8 @@ class HomePage extends BasePageObject {
 
 	@Override
     protected By getUniqueElement() {
-        log.info("Look for unique element div#hmenus for page ${this.class.simpleName}")
-        return By.cssSelector("div#hmenus")
+        log.info("Look for unique element div.subheader for page ${this.class.simpleName}")
+        return By.cssSelector("div.subheader")
     }
 
     def clickQuestionsTab() {

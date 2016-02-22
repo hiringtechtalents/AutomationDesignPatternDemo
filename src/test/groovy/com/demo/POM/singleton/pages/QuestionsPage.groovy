@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy
 @Slf4j
 class QuestionsPage extends BasePageObject {
 
-	@FindBy(id="nav-users")
+	@FindBy(xpath = "//*[text()='Users']")
 	List<WebElement> usersTab
 
 	QuestionsPage(WebDriver driver) {
@@ -19,9 +19,9 @@ class QuestionsPage extends BasePageObject {
 
 	@Override
 	protected By getUniqueElement() {
-        log.info("Look for unique element .youarehere #nav-questions for page ${this.class.simpleName}")
+		log.info("Look for unique element #questions for page ${this.class.simpleName}")
 
-        By.cssSelector(".youarehere #nav-questions")
+		By.cssSelector("#questions")
 	}
 
 	def isUsersTabDisplayed() {

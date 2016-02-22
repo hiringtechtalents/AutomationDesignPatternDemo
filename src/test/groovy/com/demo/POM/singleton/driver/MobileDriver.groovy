@@ -30,25 +30,33 @@ class MobileDriver extends DriverType {
 	@Override
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
+
+		def host = config.seleniumConfigs.mobile.ip
+		def port = config.seleniumConfigs.mobile.port
+		def browser = config.seleniumConfigs.mobile.browser
+		def device_name = config.seleniumConfigs.mobile.deviceName
+		def platform = config.seleniumConfigs.mobile.platform
+		def platform_version = config.seleniumConfigs.mobile.platformVersion
+
 		if(config.seleniumConfigs.mobile.platform.equalsIgnoreCase('android')) {
             log.info("creating AndroidDriver instance ...")
 			def caps = DesiredCapabilities.android()
 
 			caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium")
-			caps.setCapability(MobileCapabilityType.BROWSER_NAME, config.seleniumConfigs.mobile.browser)
-			caps.setCapability(MobileCapabilityType.DEVICE_NAME, config.seleniumConfigs.mobile.deviceName)
-			caps.setCapability(MobileCapabilityType.PLATFORM, config.seleniumConfigs.mobile.platform)
-			caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, config.seleniumConfigs.mobile.platformVersion)
+			caps.setCapability(MobileCapabilityType.BROWSER_NAME, browser)
+			caps.setCapability(MobileCapabilityType.DEVICE_NAME, device_name)
+			caps.setCapability(MobileCapabilityType.PLATFORM, platform)
+			caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, platform_version)
 			def strCaps = "The following capabilities set for AndroidDriver:" +
                     "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
                     "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
                     "${caps.getVersion()}."
             log.info(strCaps)
-            log.info("AndroidDriver created with url: http://${config.seleniumConfigs.mobile.ip}:${config.seleniumConfigs.mobile.port}/wd/hub")
-            return (new AndroidDriver(new URL("http://${config.seleniumConfigs.mobile.ip}:${config.seleniumConfigs.mobile.port}/wd/hub"),
+			log.info("AndroidDriver created with url: http://${host}:${port}/wd/hub")
+			return (new AndroidDriver(new URL("http://${host}:${port}/wd/hub"),
 					caps))
         } else {
-            log.info("Unsupported driver type: ${config.seleniumConfigs.mobile.platform}")
+			log.info("Unsupported driver type: ${platform}")
         }
 
         // TODO: code to create IOSDriver instance.
