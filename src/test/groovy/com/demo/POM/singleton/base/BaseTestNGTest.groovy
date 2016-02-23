@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeClass
 import org.testng.annotations.BeforeMethod
 
 @Slf4j
-class BaseTest {
+class BaseTestNGTest {
 
 	protected static def driver
 	protected def config = FrameworkConfig.instance.config
@@ -16,7 +16,7 @@ class BaseTest {
 
 	@BeforeClass
 	public void beforeClass() throws Exception {
-        log.info(String.format("Entered %s constructor", this.class.simpleName))
+		log.info("Entered ${this.class.simpleName} constructor")
 		// create a WebDriver instance on the basis of the settings
 		// provided in Config.groovy class
         log.info("Instantiating WebDriver instance for ${System.getProperty("DRIVERTYPE", "local")} driver type")
@@ -27,7 +27,7 @@ class BaseTest {
 		eyes.forceFullPageScreenshot = true
         eyes.setMatchLevel(MatchLevel.LAYOUT2)*/
 
-        log.info(String.format("Exiting %s constructor", this.class.simpleName))
+		log.info("Exiting ${this.class.simpleName} constructor")
 	}
 
 	@BeforeMethod(alwaysRun = true)
