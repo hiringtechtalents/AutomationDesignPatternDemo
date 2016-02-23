@@ -44,7 +44,7 @@ abstract class BasePageObject {
 
         // Wait until the unique element is visible in the browser and ready to use. This helps make sure the page is
         // loaded before the next step of the tests continue.
-        wait.until(ExpectedConditions.visibilityOfElementLocated(getUniqueElement()))
+        wait.until(ExpectedConditions.visibilityOfAllElements(uniqueElement))
         log.info("Exiting isLoaded method.")
 	}
 
