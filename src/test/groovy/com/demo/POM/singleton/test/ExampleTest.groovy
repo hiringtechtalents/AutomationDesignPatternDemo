@@ -52,7 +52,7 @@ class ExampleTest extends BaseTest{
         // checkRegion using applitools eyes
         //eyes.checkRegion(By.id("hlogo"), "stackoverflow tag")
 
-        Assert.assertTrue(homePage.isQuestionsTabDisplayed())
+        Assert.assertTrue((boolean) homePage.isQuestionsTabDisplayed())
 
         // close Eyes instance.
         //TestResults testResult = eyes.close()

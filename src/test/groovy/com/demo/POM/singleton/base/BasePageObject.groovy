@@ -29,18 +29,19 @@ abstract class BasePageObject {
 	/**
 	 * Each page object must implement this method to return the identifier of a unique WebElement on that page.
 	 * The presence of this unique element will be used to assert that the expected page has finished loading
-	 * @return the By locator of unique element on the page
+     * @return the By locator of unique element(s) on the page
 	 */
 	protected abstract By getUniqueElement();
 	
 	protected void isLoaded() throws Error{
         log.info("Entering isLoaded method")
 		//Define a list of WebElements that match the unique element locator for the page
-        List<WebElement> uniqueElement = driver.findElements(getUniqueElement())
+        By uniqElement = getUniqueElement()
+        List<WebElement> uniqueElement = driver.findElements(uniqElement)
 
         // Assert that the unique element is present in the DOM
         Assert.assertTrue((uniqueElement.size() > 0),
-				"Unique Element \'${getUniqueElement().toString()}\' not found for ${this.class.simpleName}")
+                "Unique Element \'${uniqElement.toString()}\' not found for ${this.class.simpleName}")
 
         // Wait until the unique element is visible in the browser and ready to use. This helps make sure the page is
         // loaded before the next step of the tests continue.
