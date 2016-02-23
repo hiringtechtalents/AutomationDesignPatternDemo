@@ -3,6 +3,7 @@ package com.demo.POM.singleton.pages
 import com.demo.POM.singleton.base.BasePageObject
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.By
+import org.openqa.selenium.InvalidSelectorException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
@@ -19,9 +20,17 @@ class QuestionsPage extends BasePageObject {
 
 	@Override
 	protected By getUniqueElement() {
-		log.info("Look for unique element #questions for page ${this.class.simpleName}")
+        log.info("Look for unique element #questions for page ${this.class.simpleName}")
 
-		By.cssSelector("#questions")
+        try {
+            By.cssSelector("#questions")
+        } catch (InvalidSelectorException ise) {
+            log.error("Malformed selector: #questions", ise)
+            throw ise
+        } catch (Exception e) {
+            log.error("Exception encountered for page ${this.class.simpleName}: ", e);
+            throw e;
+        }
 	}
 
 	def isUsersTabDisplayed() {
