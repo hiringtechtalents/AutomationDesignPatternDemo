@@ -10,7 +10,7 @@ class FrameworkConfig implements Cloneable {
 		
 	private FrameworkConfig() {
         config = new ConfigSlurper().
-				parse(new File("src/test/resources/Config.groovy")
+				parse(new File("src/main/resources/Config.groovy")
 						.toURI().toURL())
 	}
 
