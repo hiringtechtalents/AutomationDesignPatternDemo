@@ -1,5 +1,6 @@
 package com.demo.POM.singleton.driver
 
+import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
 
@@ -40,8 +41,8 @@ public final class WebDriverFactory {
                         log.info("In saucelabs driver type case block")
                         return getSauceLabsDriverInstance() as WebDriver
                     default:
-                        log.info("UnSupported driver type requested: ${driverType}")
-                        throw new RuntimeException("UnSupported driver type requested: ${driverType}")
+                        log.error("UnSupported driver type requested: ${driverType}")
+                        throw new UnsupportedDriverTypeException("UnSupported driver type requested: ${driverType}")
                 }
             }
         }

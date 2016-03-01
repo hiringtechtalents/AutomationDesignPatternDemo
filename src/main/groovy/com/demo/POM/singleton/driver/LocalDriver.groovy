@@ -1,5 +1,6 @@
 package com.demo.POM.singleton.driver
 
+import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
@@ -69,11 +70,10 @@ class LocalDriver extends DriverType {
 				return new InternetExplorerDriver(capabilities)
 			} else if(browser.toLowerCase().contains("safari")) {
 				// TODO: yet to be implemented.
-                log.info("driver creation yet to be implemented for browser: safari")
-                println "driver creation yet to be implemented for browser: safari"
+				log.warn("driver creation yet to be implemented for browser: safari")
 			} else {
-                log.info("Unknown browser type: ${browser}. Unable to create browser instance.")
-				throw new RuntimeException("Unknown Browser ${browser} Type. Unable to create browser instance.")
+				log.error("Unknown browser type: ${browser}. Unable to create browser instance.")
+				throw new UnsupportedDriverTypeException("Unknown Browser ${browser} Type. Unable to create browser instance.")
 			}
 		} else {
             log.info("the requested driver type already exists. Returning an instance of the same.")

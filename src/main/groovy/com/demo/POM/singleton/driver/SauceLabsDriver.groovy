@@ -1,5 +1,6 @@
 package com.demo.POM.singleton.driver
 
+import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
@@ -37,8 +38,8 @@ class SauceLabsDriver extends DriverType {
 			} else if(browser.equalsIgnoreCase('safari')) {
 				capabilities = DesiredCapabilities.safari()
             } else {
-                log.info("Unsupported browser type: ${browser}. Throwing RuntimeException")
-                throw new RuntimeException("unsupported browser type: ${browser}")
+				log.error("Unsupported browser type: ${browser}. Throwing exception")
+				throw new UnsupportedDriverTypeException("unsupported browser type: ${browser}")
             }
 		} else {
 			return driver

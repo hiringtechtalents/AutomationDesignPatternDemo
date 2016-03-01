@@ -3,6 +3,7 @@
  */
 package com.demo.POM.singleton.driver
 
+import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.remote.MobileCapabilityType
@@ -56,7 +57,7 @@ class MobileDriver extends DriverType {
 			return (new AndroidDriver(new URL("http://${host}:${port}/wd/hub"),
 					caps))
         } else {
-			log.info("Unsupported driver type: ${platform}")
+			log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
         }
 
         // TODO: code to create IOSDriver instance.

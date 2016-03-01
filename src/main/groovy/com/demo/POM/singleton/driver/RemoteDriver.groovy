@@ -4,6 +4,7 @@
  */
 package com.demo.POM.singleton.driver
 
+import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
@@ -48,8 +49,8 @@ class RemoteDriver extends DriverType {
             } else if (browser.equalsIgnoreCase('safari')) {
 				capabilities = DesiredCapabilities.safari()
 			} else {
-                log.info("Unsupported browser type: ${browser}. Throwing RuntimeException")
-				throw new RuntimeException("Browser type unsupported")
+				log.error("Unsupported browser type: ${browser}. Throwing RuntimeException")
+				throw new UnsupportedDriverTypeException("Browser type unsupported for ${browser}")
 			}
 		} else { return driver }
 
