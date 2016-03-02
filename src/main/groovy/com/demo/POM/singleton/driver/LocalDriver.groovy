@@ -34,7 +34,7 @@ class LocalDriver extends DriverType {
 	 */
 	@Override
 	WebDriver createDriver() {
-		def browser = config.seleniumConfigs.local.browser
+		browser = config.seleniumConfigs.local.browser
 
 		if(driver == null) {
 			String path
@@ -65,9 +65,9 @@ class LocalDriver extends DriverType {
                 log.info("path of IEDriver executable: ${path}")
 
                 System.setProperty("webdriver.ie.driver", path)
-				DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer()
-				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
-				return new InternetExplorerDriver(capabilities)
+				caps = DesiredCapabilities.internetExplorer()
+				caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
+				return new InternetExplorerDriver(caps)
 			} else if(browser.toLowerCase().contains("safari")) {
 				// TODO: yet to be implemented.
 				log.warn("driver creation yet to be implemented for browser: safari")
@@ -81,7 +81,11 @@ class LocalDriver extends DriverType {
 		}
 	}
 
-    private createDriverIfDriverFileExists = { String driverFileName ->
+	@Override
+	protected DesiredCapabilities createCapabilities(Object browser) {
+		return null
+	}
+	private createDriverIfDriverFileExists = { String driverFileName ->
         def path = new File("${System.getProperty('user.dir')}/lib/${driverFileName}")
         if (path.exists()) {
 			return path.toString()

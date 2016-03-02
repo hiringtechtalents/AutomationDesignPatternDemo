@@ -30,37 +30,42 @@ class RemoteDriver extends DriverType {
 	@Override
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
-		def browser = config.seleniumConfigs.remote.browser
+		browser = config.seleniumConfigs.remote.browser
 		def hostAddress = config.seleniumConfigs.remote.ip
 		def hostPort = config.seleniuConfigs.remote.port
-		def platform = config.seleniumConfigs.remote.platform
-		def version = config.seleniumConfigs.remote.version
-		DesiredCapabilities capabilities
+		platform = config.seleniumConfigs.remote.platform
+		version = config.seleniumConfigs.remote.version
 		
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
-            if (browser.equalsIgnoreCase("firefox")) {
-				capabilities = DesiredCapabilities.firefox()
-            } else if (browser.equalsIgnoreCase("internetExplorer")) {
-				capabilities = DesiredCapabilities.internetExplorer()
-				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
-            } else if (browser.equalsIgnoreCase("chrome")) {
-				capabilities = DesiredCapabilities.chrome()
-            } else if (browser.equalsIgnoreCase('safari')) {
-				capabilities = DesiredCapabilities.safari()
-			} else {
-				log.error("Unsupported browser type: ${browser}. Throwing RuntimeException")
-				throw new UnsupportedDriverTypeException("Browser type unsupported for ${browser}")
-			}
+			caps = createCapabilities(browser)
 		} else { return driver }
 
-		capabilities.version = version
-		capabilities.platform = Platform.fromString(platform)
+		caps.version = version
+		caps.platform = Platform.fromString(platform)
 
 		log.info("creating RemoteWebDriver instance with url: http://${hostAddress}:${hostPort}/wd/hub")
         log.info("and capabilities: ${capabilities.getVersion()}, ${capabilities.getPlatform()}")
 		return (new RemoteWebDriver(
 				new URL("http://${hostAddress}:${hostPort}/wd/hub"), capabilities))
+	}
+
+	protected DesiredCapabilities createCapabilities(browser) {
+		DesiredCapabilities capabilities
+		if (browser.equalsIgnoreCase("firefox")) {
+			capabilities = DesiredCapabilities.firefox()
+		} else if (browser.equalsIgnoreCase("internetExplorer")) {
+			capabilities = DesiredCapabilities.internetExplorer()
+			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
+		} else if (browser.equalsIgnoreCase("chrome")) {
+			capabilities = DesiredCapabilities.chrome()
+		} else if (browser.equalsIgnoreCase('safari')) {
+			capabilities = DesiredCapabilities.safari()
+		} else {
+			log.error("Unsupported browser type: ${browser}. Throwing RuntimeException")
+			throw new UnsupportedDriverTypeException("Browser type unsupported for ${browser}")
+		}
+		capabilities
 	}
 
 }

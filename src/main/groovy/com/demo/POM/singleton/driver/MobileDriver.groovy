@@ -34,20 +34,14 @@ class MobileDriver extends DriverType {
 
 		def host = config.seleniumConfigs.mobile.ip
 		def port = config.seleniumConfigs.mobile.port
-		def browser = config.seleniumConfigs.mobile.browser
+        browser = config.seleniumConfigs.mobile.browser
 		def device_name = config.seleniumConfigs.mobile.deviceName
-		def platform = config.seleniumConfigs.mobile.platform
-		def platform_version = config.seleniumConfigs.mobile.platformVersion
+        platform = config.seleniumConfigs.mobile.platform
+        version = config.seleniumConfigs.mobile.platformVersion
 
-		if(config.seleniumConfigs.mobile.platform.equalsIgnoreCase('android')) {
+        if (platform.equalsIgnoreCase('android')) {
             log.info("creating AndroidDriver instance ...")
-			def caps = DesiredCapabilities.android()
-
-			caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium")
-			caps.setCapability(MobileCapabilityType.BROWSER_NAME, browser)
-			caps.setCapability(MobileCapabilityType.DEVICE_NAME, device_name)
-			caps.setCapability(MobileCapabilityType.PLATFORM, platform)
-			caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, platform_version)
+            caps = createCapabilities('android')
 			def strCaps = "The following capabilities set for AndroidDriver:" +
                     "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
                     "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
@@ -61,6 +55,22 @@ class MobileDriver extends DriverType {
         }
 
         // TODO: code to create IOSDriver instance.
+    }
+
+    @Override
+    protected DesiredCapabilities createCapabilities(Object browser) {
+        def caps
+        if (browser.equalsIgnoreCase('android')) {
+            caps = DesiredCapabilities.android()
+
+            caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium")
+            caps.setCapability(MobileCapabilityType.BROWSER_NAME, browser)
+            caps.setCapability(MobileCapabilityType.DEVICE_NAME, device_name)
+            caps.setCapability(MobileCapabilityType.PLATFORM, platform)
+            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, version)
+        }
+
+        caps
 	}
 
 }
