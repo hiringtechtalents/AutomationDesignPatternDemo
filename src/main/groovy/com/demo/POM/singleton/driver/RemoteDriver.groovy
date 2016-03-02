@@ -31,8 +31,8 @@ class RemoteDriver extends DriverType {
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
 		browser = config.seleniumConfigs.remote.browser
-		def hostAddress = config.seleniumConfigs.remote.ip
-		def hostPort = config.seleniuConfigs.remote.port
+		serverAddress = config.seleniumConfigs.remote.ip
+		serverPort = config.seleniuConfigs.remote.port
 		platform = config.seleniumConfigs.remote.platform
 		version = config.seleniumConfigs.remote.version
 		
@@ -44,10 +44,10 @@ class RemoteDriver extends DriverType {
 		caps.version = version
 		caps.platform = Platform.fromString(platform)
 
-		log.info("creating RemoteWebDriver instance with url: http://${hostAddress}:${hostPort}/wd/hub")
+		log.info("creating RemoteWebDriver instance with url: http://${serverAddress}:${serverPort}/wd/hub")
 		log.info("and capabilities: ${caps.getVersion()}, ${caps.getPlatform()}")
 		return (new RemoteWebDriver(
-				new URL("http://${hostAddress}:${hostPort}/wd/hub"), caps))
+				new URL("http://${serverAddress}:${serverPort}/wd/hub"), caps))
 	}
 
 	protected DesiredCapabilities createCapabilities() {

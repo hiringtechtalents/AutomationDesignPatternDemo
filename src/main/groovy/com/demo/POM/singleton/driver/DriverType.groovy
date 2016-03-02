@@ -18,7 +18,7 @@ abstract class DriverType {
 	protected def driver
 	protected def config
 
-    protected def browser, platform, version, caps
+    protected def browser, platform, version, caps, serverAddress, serverPort
 
 	public DriverType() {
 		config = FrameworkConfig.getInstance().getConfig()

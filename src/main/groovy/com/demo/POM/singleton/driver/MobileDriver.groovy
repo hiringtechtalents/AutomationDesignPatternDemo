@@ -17,7 +17,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
 
 @Slf4j
 class MobileDriver extends DriverType {
-    def device_name
+    private def device_name
 	
 	public MobileDriver() {
 		super()
@@ -32,35 +32,38 @@ class MobileDriver extends DriverType {
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
 
-		def host = config.seleniumConfigs.mobile.ip
-		def port = config.seleniumConfigs.mobile.port
+        serverAddress = config.seleniumConfigs.mobile.ip
+        serverPort = config.seleniumConfigs.mobile.port
         browser = config.seleniumConfigs.mobile.browser
         device_name = config.seleniumConfigs.mobile.deviceName
         platform = config.seleniumConfigs.mobile.platform
         version = config.seleniumConfigs.mobile.platformVersion
 
         if (platform.equalsIgnoreCase('android')) {
-            log.info("creating AndroidDriver instance ...")
-            caps = createCapabilities()
-			def strCaps = "The following capabilities set for AndroidDriver:" +
-                    "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
-                    "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
-                    "${caps.getVersion()}."
-            log.info(strCaps)
-			log.info("AndroidDriver created with url: http://${host}:${port}/wd/hub")
-			return (new AndroidDriver(new URL("http://${host}:${port}/wd/hub"),
-					caps))
+            return createAndroidDriver()
         } else {
+            // TODO: code to create IOSDriver instance.
 			log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
         }
+    }
 
-        // TODO: code to create IOSDriver instance.
+    private createAndroidDriver() {
+        log.info("creating AndroidDriver instance ...")
+        caps = createCapabilities()
+        def strCaps = "The following capabilities set for AndroidDriver:" +
+                "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
+                "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
+                "${caps.getVersion()}."
+        log.info(strCaps)
+        log.info("AndroidDriver created with url: http://${serverAddress}:${serverPort}/wd/hub")
+        return (new AndroidDriver(new URL("http://${serverAddress}:${serverPort}/wd/hub"),
+                caps))
     }
 
     @Override
     protected DesiredCapabilities createCapabilities() {
         def caps
-        if (browser.equalsIgnoreCase('android')) {
+        if (platform.equalsIgnoreCase('android')) {
             caps = DesiredCapabilities.android()
 
             caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium")
