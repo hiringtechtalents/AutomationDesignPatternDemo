@@ -82,7 +82,7 @@ class LocalDriver extends DriverType {
 	}
 
 	@Override
-	protected DesiredCapabilities createCapabilities(Object browser) {
+	protected DesiredCapabilities createCapabilities() {
 		return null
 	}
 	private createDriverIfDriverFileExists = { String driverFileName ->

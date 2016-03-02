@@ -28,7 +28,7 @@ class SauceLabsDriver extends DriverType {
 		
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
-            caps = createCapabilities(browser)
+            caps = createCapabilities()
 		} else {
 			return driver
 		}
@@ -45,7 +45,7 @@ class SauceLabsDriver extends DriverType {
     }
 
     @Override
-    protected DesiredCapabilities createCapabilities(Object browser) {
+    protected DesiredCapabilities createCapabilities() {
         def capabilities
         if (browser.equalsIgnoreCase('firefox')) {
             capabilities = DesiredCapabilities.firefox()

@@ -38,19 +38,19 @@ class RemoteDriver extends DriverType {
 		
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
-			caps = createCapabilities(browser)
+			caps = createCapabilities()
 		} else { return driver }
 
 		caps.version = version
 		caps.platform = Platform.fromString(platform)
 
 		log.info("creating RemoteWebDriver instance with url: http://${hostAddress}:${hostPort}/wd/hub")
-        log.info("and capabilities: ${capabilities.getVersion()}, ${capabilities.getPlatform()}")
+		log.info("and capabilities: ${caps.getVersion()}, ${caps.getPlatform()}")
 		return (new RemoteWebDriver(
-				new URL("http://${hostAddress}:${hostPort}/wd/hub"), capabilities))
+				new URL("http://${hostAddress}:${hostPort}/wd/hub"), caps))
 	}
 
-	protected DesiredCapabilities createCapabilities(browser) {
+	protected DesiredCapabilities createCapabilities() {
 		DesiredCapabilities capabilities
 		if (browser.equalsIgnoreCase("firefox")) {
 			capabilities = DesiredCapabilities.firefox()

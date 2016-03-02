@@ -26,5 +26,5 @@ abstract class DriverType {
 	
 	protected abstract WebDriver createDriver();
 
-    protected abstract DesiredCapabilities createCapabilities(browser);
+    protected abstract DesiredCapabilities createCapabilities();
 }

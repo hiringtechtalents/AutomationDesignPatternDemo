@@ -17,7 +17,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
 
 @Slf4j
 class MobileDriver extends DriverType {
-	//DesiredCapabilities caps
+    def device_name
 	
 	public MobileDriver() {
 		super()
@@ -35,13 +35,13 @@ class MobileDriver extends DriverType {
 		def host = config.seleniumConfigs.mobile.ip
 		def port = config.seleniumConfigs.mobile.port
         browser = config.seleniumConfigs.mobile.browser
-		def device_name = config.seleniumConfigs.mobile.deviceName
+        device_name = config.seleniumConfigs.mobile.deviceName
         platform = config.seleniumConfigs.mobile.platform
         version = config.seleniumConfigs.mobile.platformVersion
 
         if (platform.equalsIgnoreCase('android')) {
             log.info("creating AndroidDriver instance ...")
-            caps = createCapabilities('android')
+            caps = createCapabilities()
 			def strCaps = "The following capabilities set for AndroidDriver:" +
                     "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
                     "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
@@ -58,7 +58,7 @@ class MobileDriver extends DriverType {
     }
 
     @Override
-    protected DesiredCapabilities createCapabilities(Object browser) {
+    protected DesiredCapabilities createCapabilities() {
         def caps
         if (browser.equalsIgnoreCase('android')) {
             caps = DesiredCapabilities.android()
