@@ -19,14 +19,7 @@ class SauceLabsDriver extends DriverType {
 	@Override
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
-        browser = config.seleniumConfigs.sauceLabs.browser
-        userName = config.seleniumConfigs.sauceLabs.userName
-        accessKey = config.seleniumConfigs.sauceLabs.accessKey
-        platform = config.seleniumConfigs.sauceLabs.os
-        version = config.seleniumConfigs.sauceLabs.browserVersion
-        serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
-        serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
-		
+
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
             caps = createCapabilities()
@@ -47,6 +40,14 @@ class SauceLabsDriver extends DriverType {
 
     @Override
     protected DesiredCapabilities createCapabilities() {
+        browser = config.seleniumConfigs.sauceLabs.browser
+        userName = config.seleniumConfigs.sauceLabs.userName
+        accessKey = config.seleniumConfigs.sauceLabs.accessKey
+        platform = config.seleniumConfigs.sauceLabs.os
+        version = config.seleniumConfigs.sauceLabs.browserVersion
+        serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
+        serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
+
         def capabilities
         if (browser.equalsIgnoreCase('firefox')) {
             capabilities = DesiredCapabilities.firefox()

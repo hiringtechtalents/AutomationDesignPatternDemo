@@ -30,11 +30,6 @@ class RemoteDriver extends DriverType {
 	@Override
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
-		browser = config.seleniumConfigs.remote.browser
-		serverAddress = config.seleniumConfigs.remote.ip
-		serverPort = config.seleniuConfigs.remote.port
-		platform = config.seleniumConfigs.remote.platform
-		version = config.seleniumConfigs.remote.version
 		
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
@@ -51,6 +46,12 @@ class RemoteDriver extends DriverType {
 	}
 
 	protected DesiredCapabilities createCapabilities() {
+		browser = config.seleniumConfigs.remote.browser
+		serverAddress = config.seleniumConfigs.remote.ip
+		serverPort = config.seleniuConfigs.remote.port
+		platform = config.seleniumConfigs.remote.platform
+		version = config.seleniumConfigs.remote.version
+
 		DesiredCapabilities capabilities
 		if (browser.equalsIgnoreCase("firefox")) {
 			capabilities = DesiredCapabilities.firefox()

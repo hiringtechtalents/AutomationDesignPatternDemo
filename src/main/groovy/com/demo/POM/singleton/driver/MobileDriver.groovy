@@ -32,13 +32,6 @@ class MobileDriver extends DriverType {
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
 
-        serverAddress = config.seleniumConfigs.mobile.ip
-        serverPort = config.seleniumConfigs.mobile.port
-        browser = config.seleniumConfigs.mobile.browser
-        device_name = config.seleniumConfigs.mobile.deviceName
-        platform = config.seleniumConfigs.mobile.platform
-        version = config.seleniumConfigs.mobile.platformVersion
-
         if (platform.equalsIgnoreCase('android')) {
             return createAndroidDriver()
         } else {
@@ -49,6 +42,13 @@ class MobileDriver extends DriverType {
 
     private createAndroidDriver() {
         log.info("creating AndroidDriver instance ...")
+        serverAddress = config.seleniumConfigs.mobile.ip
+        serverPort = config.seleniumConfigs.mobile.port
+        browser = config.seleniumConfigs.mobile.browser
+        device_name = config.seleniumConfigs.mobile.deviceName
+        platform = config.seleniumConfigs.mobile.platform
+        version = config.seleniumConfigs.mobile.platformVersion
+
         caps = createCapabilities()
         def strCaps = "The following capabilities set for AndroidDriver:" +
                 "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
