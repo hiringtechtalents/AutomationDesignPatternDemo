@@ -23,6 +23,8 @@ class LocalDriver extends DriverType {
 	
 	public LocalDriver() {
 		super()
+
+        browser = config.seleniumConfigs.local.browser
 	}
 
 	/**
@@ -34,10 +36,10 @@ class LocalDriver extends DriverType {
 	 */
 	@Override
 	WebDriver createDriver() {
-		browser = config.seleniumConfigs.local.browser
+        log.info("entering createDriver of %s class", this.class.simpleName)
 
 		if(driver == null) {
-			String path
+            String path = null
 			if(browser.toLowerCase().contains("firefox")) {
                 log.info("browser firefox requested. Creating and returning an instance ...")
 				return new FirefoxDriver()

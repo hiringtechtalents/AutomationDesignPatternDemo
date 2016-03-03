@@ -11,7 +11,6 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
-
 /**
  * @author SANDEEP
  *
@@ -22,6 +21,12 @@ class RemoteDriver extends DriverType {
 	
 	public RemoteDriver() {
 		super()
+
+		browser = config.seleniumConfigs.remote.browser
+		serverAddress = config.seleniumConfigs.remote.ip
+		serverPort = config.seleniuConfigs.remote.port
+		platform = config.seleniumConfigs.remote.platform
+		version = config.seleniumConfigs.remote.version
 	}
 
 	/* (non-Javadoc)
@@ -33,11 +38,8 @@ class RemoteDriver extends DriverType {
 		
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
-			caps = createCapabilities()
+			createCapabilities()
 		} else { return driver }
-
-		caps.version = version
-		caps.platform = Platform.fromString(platform)
 
 		log.info("creating RemoteWebDriver instance with url: http://${serverAddress}:${serverPort}/wd/hub")
 		log.info("and capabilities: ${caps.getVersion()}, ${caps.getPlatform()}")
@@ -45,28 +47,23 @@ class RemoteDriver extends DriverType {
 				new URL("http://${serverAddress}:${serverPort}/wd/hub"), caps))
 	}
 
-	protected DesiredCapabilities createCapabilities() {
-		browser = config.seleniumConfigs.remote.browser
-		serverAddress = config.seleniumConfigs.remote.ip
-		serverPort = config.seleniuConfigs.remote.port
-		platform = config.seleniumConfigs.remote.platform
-		version = config.seleniumConfigs.remote.version
-
-		DesiredCapabilities capabilities
+	@Override
+	protected def createCapabilities() {
 		if (browser.equalsIgnoreCase("firefox")) {
-			capabilities = DesiredCapabilities.firefox()
+			caps = DesiredCapabilities.firefox()
 		} else if (browser.equalsIgnoreCase("internetExplorer")) {
-			capabilities = DesiredCapabilities.internetExplorer()
-			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
+			caps = DesiredCapabilities.internetExplorer()
+			caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
 		} else if (browser.equalsIgnoreCase("chrome")) {
-			capabilities = DesiredCapabilities.chrome()
+			caps = DesiredCapabilities.chrome()
 		} else if (browser.equalsIgnoreCase('safari')) {
-			capabilities = DesiredCapabilities.safari()
+			caps = DesiredCapabilities.safari()
 		} else {
 			log.error("Unsupported browser type: ${browser}. Throwing RuntimeException")
 			throw new UnsupportedDriverTypeException("Browser type unsupported for ${browser}")
 		}
-		capabilities
-	}
 
+		caps.version = version
+		caps.platform = Platform.fromString(platform)
+	}
 }

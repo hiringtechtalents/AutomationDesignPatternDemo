@@ -21,6 +21,13 @@ class MobileDriver extends DriverType {
 	
 	public MobileDriver() {
 		super()
+
+        serverAddress = config.seleniumConfigs.mobile.ip
+        serverPort = config.seleniumConfigs.mobile.port
+        browser = config.seleniumConfigs.mobile.browser
+        device_name = config.seleniumConfigs.mobile.deviceName
+        platform = config.seleniumConfigs.mobile.platform
+        version = config.seleniumConfigs.mobile.platformVersion
 	}
 
 	/* (non-Javadoc)
@@ -42,14 +49,8 @@ class MobileDriver extends DriverType {
 
     private createAndroidDriver() {
         log.info("creating AndroidDriver instance ...")
-        serverAddress = config.seleniumConfigs.mobile.ip
-        serverPort = config.seleniumConfigs.mobile.port
-        browser = config.seleniumConfigs.mobile.browser
-        device_name = config.seleniumConfigs.mobile.deviceName
-        platform = config.seleniumConfigs.mobile.platform
-        version = config.seleniumConfigs.mobile.platformVersion
 
-        caps = createCapabilities()
+        createCapabilities()
         def strCaps = "The following capabilities set for AndroidDriver:" +
                 "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
                 "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
@@ -61,8 +62,7 @@ class MobileDriver extends DriverType {
     }
 
     @Override
-    protected DesiredCapabilities createCapabilities() {
-        def caps
+    protected def createCapabilities() {
         if (platform.equalsIgnoreCase('android')) {
             caps = DesiredCapabilities.android()
 
@@ -72,8 +72,5 @@ class MobileDriver extends DriverType {
             caps.setCapability(MobileCapabilityType.PLATFORM, platform)
             caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, version)
         }
-
-        caps
 	}
-
 }

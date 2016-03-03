@@ -14,6 +14,14 @@ class SauceLabsDriver extends DriverType {
 	
 	public SauceLabsDriver() {
 		super()
+
+        browser = config.seleniumConfigs.sauceLabs.browser
+        userName = config.seleniumConfigs.sauceLabs.userName
+        accessKey = config.seleniumConfigs.sauceLabs.accessKey
+        platform = config.seleniumConfigs.sauceLabs.os
+        version = config.seleniumConfigs.sauceLabs.browserVersion
+        serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
+        serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
 	}
 
 	@Override
@@ -22,13 +30,10 @@ class SauceLabsDriver extends DriverType {
 
 		if(driver == null) {
             log.info("Requesting ${browser} instance")
-            caps = createCapabilities()
+            createCapabilities()
 		} else {
 			return driver
 		}
-
-        caps.version = version
-        caps.platform = Platform.fromString(platform)
 
         log.info("creating SauceLabsDriver instance with url: http://${userName}:${accessKey}@${serverAddress}:${serverPort}/wd/hub")
         log.info("and capabilities: ${caps.getVersion()}, ${caps.getPlatform()}")
@@ -39,30 +44,22 @@ class SauceLabsDriver extends DriverType {
     }
 
     @Override
-    protected DesiredCapabilities createCapabilities() {
-        browser = config.seleniumConfigs.sauceLabs.browser
-        userName = config.seleniumConfigs.sauceLabs.userName
-        accessKey = config.seleniumConfigs.sauceLabs.accessKey
-        platform = config.seleniumConfigs.sauceLabs.os
-        version = config.seleniumConfigs.sauceLabs.browserVersion
-        serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
-        serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
-
-        def capabilities
+    protected def createCapabilities() {
         if (browser.equalsIgnoreCase('firefox')) {
-            capabilities = DesiredCapabilities.firefox()
+            caps = DesiredCapabilities.firefox()
         } else if (browser.equalsIgnoreCase('chrome')) {
-            capabilities = DesiredCapabilities.chrome()
+            caps = DesiredCapabilities.chrome()
         } else if (browser.contains('internet')) {
-            capabilities = DesiredCapabilities.internetExplorer()
-            capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
+            caps = DesiredCapabilities.internetExplorer()
+            caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
         } else if (browser.equalsIgnoreCase('safari')) {
-            capabilities = DesiredCapabilities.safari()
+            caps = DesiredCapabilities.safari()
         } else {
             log.error("Unsupported browser type: ${browser}. Throwing exception")
             throw new UnsupportedDriverTypeException("unsupported browser type: ${browser}")
         }
-        capabilities
-	}
 
+        caps.version = version
+        caps.platform = Platform.fromString(platform)
+    }
 }
