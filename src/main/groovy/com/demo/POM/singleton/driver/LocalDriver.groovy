@@ -67,7 +67,7 @@ class LocalDriver extends DriverType {
                 log.info("path of IEDriver executable: ${path}")
 
                 System.setProperty("webdriver.ie.driver", path)
-                caps = createCapabilities()
+				createCapabilities()
 				return new InternetExplorerDriver(caps)
 			} else if(browser.toLowerCase().contains("safari")) {
 				// TODO: yet to be implemented.
@@ -84,12 +84,12 @@ class LocalDriver extends DriverType {
 
 	@Override
 	protected DesiredCapabilities createCapabilities() {
-        DesiredCapabilities caps
-        if (browser.toLowerCase().contains("internet")) {
+
+		if (browser.toLowerCase().contains("internet")) {
             caps = DesiredCapabilities.internetExplorer()
             caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
         }
-        return caps
+
 	}
 	private createDriverIfDriverFileExists = { String driverFileName ->
         def path = new File("${System.getProperty('user.dir')}/lib/${driverFileName}")
