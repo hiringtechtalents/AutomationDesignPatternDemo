@@ -83,7 +83,7 @@ class LocalDriver extends DriverType {
 	}
 
 	@Override
-	protected DesiredCapabilities createCapabilities() {
+	protected def createCapabilities() {
 
 		if (browser.toLowerCase().contains("internet")) {
             caps = DesiredCapabilities.internetExplorer()
