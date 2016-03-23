@@ -5,22 +5,11 @@ import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
 
 @Slf4j
+@Singleton
 public final class WebDriverFactory {
-    private static WebDriverFactory instance
     private def localDriverInstance, mobileDriverInstance, remoteDriverInstance, sauceLabsDriverInstance
 
     private ThreadLocal<WebDriver> driver
-
-    private WebDriverFactory() {}
-
-	public static WebDriverFactory getInstance() {
-		if (instance == null) {
-			synchronized(WebDriverFactory.class) {
-                if (instance == null) instance = new WebDriverFactory();
-			}
-		}
-        return instance;
-	}
 
     public WebDriver getDriver(String driverType) throws Exception {
         log.info("Entering getDriver method with the param driverType: ${driverType}")
