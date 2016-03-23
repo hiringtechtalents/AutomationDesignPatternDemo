@@ -41,10 +41,14 @@ class MobileDriver extends DriverType {
 
         if (platform.equalsIgnoreCase('android')) {
             return createAndroidDriver()
-        } else {
-            // TODO: code to create IOSDriver instance.
-			log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
+        } else if (platform.equalsIgnoreCase("iOS")) {
+            return createIOSDriver()
         }
+    }
+
+    private createIOSDriver() {
+        // TODO: code to create IOSDriver instance.
+        log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
     }
 
     private createAndroidDriver() {
