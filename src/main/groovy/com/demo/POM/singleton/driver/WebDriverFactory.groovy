@@ -11,7 +11,7 @@ public final class WebDriverFactory {
 
     private ThreadLocal<WebDriver> driver
 
-    public WebDriver getDriver(String driverType) throws Exception {
+    public getDriver = { String driverType ->
         log.info("Entering getDriver method with the param driverType: ${driverType}")
         driver = new ThreadLocal<WebDriver>() {
             @Override
@@ -39,7 +39,7 @@ public final class WebDriverFactory {
         log.info("exiting getDriver method of ${this.class.simpleName} class")
 
         driver.get()
-	}
+    }
 
     private def getLocalDriverInstance() {
         log.info("creating a singleton local driver instance ...")
