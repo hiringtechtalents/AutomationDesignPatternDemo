@@ -3,13 +3,8 @@
  */
 package com.demo.POM.singleton.driver
 
-import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
-import io.appium.java_client.android.AndroidDriver
-import io.appium.java_client.remote.MobileCapabilityType
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.remote.DesiredCapabilities
-
 /**
  * @author SANDEEP
  *
@@ -17,17 +12,15 @@ import org.openqa.selenium.remote.DesiredCapabilities
 
 @Slf4j
 class MobileDriver extends DriverType {
-    private def device_name
+    protected def device_name
+    private def mobile_platform
 	
 	public MobileDriver() {
 		super()
 
         serverAddress = config.seleniumConfigs.mobile.ip
         serverPort = config.seleniumConfigs.mobile.port
-        browser = config.seleniumConfigs.mobile.browser
-        device_name = config.seleniumConfigs.mobile.deviceName
-        platform = config.seleniumConfigs.mobile.platform
-        version = config.seleniumConfigs.mobile.platformVersion
+        mobile_platform = config.seleniumConfigs.mobile.mobile_platform
 	}
 
 	/* (non-Javadoc)
@@ -38,43 +31,28 @@ class MobileDriver extends DriverType {
 	@Override
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
+        log.info("creating driver of $mobile_platform type")
 
-        if (platform.equalsIgnoreCase('android')) {
+        if (mobile_platform.equalsIgnoreCase('android')) {
             return createAndroidDriver()
-        } else if (platform.equalsIgnoreCase("iOS")) {
+        } else if (mobile_platform.equalsIgnoreCase("iOS")) {
             return createIOSDriver()
         }
     }
 
+    @Override
+    protected createCapabilities() {}
+
     private createIOSDriver() {
-        // TODO: code to create IOSDriver instance.
-        log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
+        log.info("entering createIOSDriver of ${this.class.simpleName} class")
+        // log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
+
+        return new IOSMobileDriver().createIOSDriver()
     }
 
     private createAndroidDriver() {
         log.info("creating AndroidDriver instance ...")
 
-        createCapabilities()
-        def strCaps = "The following capabilities set for AndroidDriver:" +
-                "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +
-                "${caps.getCapability(MobileCapabilityType.DEVICE_NAME)}, ${caps.getPlatform()}, " +
-                "${caps.getVersion()}."
-        log.info(strCaps)
-        log.info("AndroidDriver created with url: http://${serverAddress}:${serverPort}/wd/hub")
-        return (new AndroidDriver(new URL("http://${serverAddress}:${serverPort}/wd/hub"),
-                caps))
+        return new AndroidMobileDriver().createAndroidDriver()
     }
-
-    @Override
-    protected def createCapabilities() {
-        if (platform.equalsIgnoreCase('android')) {
-            caps = DesiredCapabilities.android()
-
-            caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium")
-            caps.setCapability(MobileCapabilityType.BROWSER_NAME, browser)
-            caps.setCapability(MobileCapabilityType.DEVICE_NAME, device_name)
-            caps.setCapability(MobileCapabilityType.PLATFORM, platform)
-            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, version)
-        }
-	}
 }

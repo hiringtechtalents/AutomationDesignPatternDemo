@@ -75,6 +75,14 @@
                             <value>local</value>
                         </systemProperty>
                         <systemProperty>
+                            <name>MOBILE_PLATFORM</name>
+                            <value>android</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>DEVICETYPE</name>
+                            <value>iphone</value>
+                        </systemProperty>
+                        <systemProperty>
                             <name>SAUCE_USERNAME</name>
                             <value>sandeep-singh-79</value>
                         </systemProperty>

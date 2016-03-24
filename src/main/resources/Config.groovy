@@ -27,10 +27,28 @@ seleniumConfigs {
 	mobile {
 		ip = System.getProperty("SELENIUM_HOST", "localhost")
 		port = Integer.valueOf(System.getProperty("SELENIUM_PORT", "4723"))
-		browser = System.getProperty("BROWSER",'Browser')
-		platform = 'Android'
-		deviceName = 'Android Emulator'
-		platformVersion = '4.4.2'
+        mobile_platform = System.getProperty('MOBILE_PLATFORM', 'android')
+        android {
+            browser = System.getProperty("BROWSER", 'Browser')
+            platform = 'Android'
+            deviceName = 'Android Emulator'
+            platformVersion = '4.4.2'
+        }
+        ios {
+            deviceType = System.getProperty('DEVICETYPE', 'iphone')
+            iphone {
+                browser = System.getProperty("BROWSER", 'Safari')
+                platform = 'iOS'
+                deviceName = 'iPhone Emulator'
+                platformVersion = '8.1'
+            }
+            ipad {
+                browser = System.getProperty("BROWSER", 'Safari')
+                platform = 'iOS'
+                deviceName = 'iPad Emulator'
+                platformVersion = '8.1'
+            }
+        }
 	}
 	sauceLabs {
 		// the various Sauce properties are introduced by the SauceLabs
