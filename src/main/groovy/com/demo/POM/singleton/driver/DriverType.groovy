@@ -16,16 +16,12 @@ abstract class DriverType {
 	// common settings required by child classes
 	protected def caps = null
 	protected def driver = null
-    protected def config = FrameworkConfig.instance.config
 	protected def browser = null
 	protected def platform = null
 	protected def version = null
 	protected def serverAddress = null
 	protected def serverPort = null
-
-    /*public DriverType() {
-        config = FrameworkConfig.instance.getConfig()
-    }*/
+	protected def config = FrameworkConfig.instance.config
 	
 	protected abstract WebDriver createDriver();
 

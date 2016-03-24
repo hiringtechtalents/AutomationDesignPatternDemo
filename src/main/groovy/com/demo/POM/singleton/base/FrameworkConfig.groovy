@@ -4,23 +4,11 @@ import groovy.util.logging.Slf4j
 
 @Slf4j
 @Singleton
-class FrameworkConfig /*implements Cloneable*/ {
+class FrameworkConfig {
 
-    //private static final def instance = new FrameworkConfig()
     private def config = new ConfigSlurper().
             parse(new File("src/main/resources/Config.groovy")
                     .toURI().toURL())
-
-    /*private FrameworkConfig() {
-        config = new ConfigSlurper().
-                parse(new File("src/main/resources/Config.groovy")
-                        .toURI().toURL())
-    }
-
-    static def getInstance() {
-        log.info("Entering getInstance. Returning the instance of the current class")
-        return instance
-    }*/
 	
 	def getConfig() {
         log.info("Entering getConfig. Returning the config object")
