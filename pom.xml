@@ -102,6 +102,10 @@
                             <name>LOGROOTLEVEL</name>
                             <value>DEBUG</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>MOBILE_PLATFORM</name>
+                            <value>android</value>
+                        </systemProperty>
                     </systemProperties>
                     <properties>
                         <property>
