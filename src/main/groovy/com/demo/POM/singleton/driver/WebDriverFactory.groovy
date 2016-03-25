@@ -3,6 +3,7 @@ package com.demo.POM.singleton.driver
 import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.remote.UnreachableBrowserException
 
 @Slf4j
 @Singleton
@@ -67,7 +68,15 @@ public final class WebDriverFactory {
         log.info("creating a singleton mobile driver instance ...")
         if (mobileDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
-                if (mobileDriverInstance == null) mobileDriverInstance = new MobileDriver().createDriver()
+                if (mobileDriverInstance == null) {
+                    try {
+                        mobileDriverInstance = new MobileDriver().createDriver()
+                    } catch (UnreachableBrowserException e) {
+                        log.error("We were unable to contact the mobile device and/or launch the browser. Exception encountered: ${e}")
+                        log.error("Please check if the correct appium port, host & browser were supplied ...")
+                        throw e
+                    }
+                }
             }
         }
 
