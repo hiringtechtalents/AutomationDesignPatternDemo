@@ -21,8 +21,8 @@ seleniumConfigs {
 		ip = System.getProperty("SELENIUM_HOST", "localhost")
 		port = Integer.valueOf(System.getProperty("SELENIUM_PORT", "4444"))
 		browser = System.getProperty("BROWSER",'firefox')
-		version = '42'
-		platform = 'ANY'
+		version = System.getProperty('SELENIUM_VERSION', '42')
+		platform = System.getProperty('SELENIUM_PLATFORM', 'ANY')
 	}
 	mobile {
 		ip = System.getProperty("SELENIUM_HOST", "localhost")
