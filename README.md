@@ -10,6 +10,14 @@ It is an extension of the page-objects github project by Iain Rose (https://gith
 - The project now supports running the same set of tests on a mobile platform(s) and, on saucelabs, and
 - groups are no longer supported during test execution.
 
+## Create Page Object Classes
+To create Page Objects classes extend from BasePageObject class. While extending from BasePageObject you'll need to override getUniqueElement method which returns the By class reference of the unique element on the page.
+
+Also, while creating a page object, don't forget to include the call to the base class constructor passing the WebDriver instance.
+
+## Create a test
+Creating a test entails extending from the BaseTestNGTest class. And, now you are ready to start writing tests.
+
 ## Various system properties supported by the framework
 1. BROWSER - to specify the browser the tests are to be run against. For tests to be run on mobile platform, specify 'Browser' & 'Safari' for Android & iOS, respectively.
 2. SELENIUM_HOST - specify the ip of the grid/appium server

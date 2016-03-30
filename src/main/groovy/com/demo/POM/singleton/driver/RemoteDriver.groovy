@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
+
 /**
  * @author SANDEEP
  *
@@ -21,20 +22,67 @@ import org.openqa.selenium.remote.RemoteWebDriver
 @Slf4j
 @PackageScope(PackageScopeTarget.CLASS)
 class RemoteDriver extends DriverType {
+    private static def seleniumServer
+
+    private static String gridNodeLaunchCommand
+
+    private static String windowsGridNodeLaunchCommand
 	
 	public RemoteDriver() {
 		super()
 
 		browser = config.seleniumConfigs.remote.browser
 		serverAddress = config.seleniumConfigs.remote.ip
-		serverPort = config.seleniuConfigs.remote.port
+        serverPort = config.seleniumConfigs.remote.port
 		platform = config.seleniumConfigs.remote.platform
 		version = config.seleniumConfigs.remote.version
+
+        try {
+            def seleniumServerDir = "${System.getProperty('user.dir')}/lib"
+            def filePattern = /selenium-server*/
+
+            seleniumServer = new FileNameByRegexFinder().getFileNames(seleniumServerDir, filePattern)
+
+            log.info("number of matching selenium server files: ${seleniumServer.size()}")
+
+        } catch (IllegalArgumentException | Exception e) {
+            log.error("Issues observed locating the selenium-server-standalone jar file")
+            log.error(e)
+            throw e
+        }
+
+        gridNodeLaunchCommand = "java -jar ${seleniumServer.get(0)}"
+        windowsGridNodeLaunchCommand = "cmd.exe /c start $gridNodeLaunchCommand"
+
+        launchGridNode(serverAddress, serverPort, browser, platform, version)
 	}
 
-	/* (non-Javadoc)
-	 * @see com.test.driver.Driver#createDriver(java.lang.String)
-	 */
+    private void launchGridNode(serverAddress, serverPort, browser, platform, version) {
+        Process p
+
+        if (System.getProperty("os.name").contains("Windows")) {
+            windowsGridNodeLaunchCommand += " -role node -hub http://${serverAddress}:${serverPort}/grid/register"
+            p = windowsGridNodeLaunchCommand.execute()
+        } else {
+            gridNodeLaunchCommand += " -role node -hub http://${serverAddress}:${serverPort}/grid/register"
+            p = gridNodeLaunchCommand.execute()
+        }
+
+        if (!p.exitValue()) {
+            log.error("grid node launch process exited with value: ${p.exitValue()}")
+            log.error("Unable to launch the grid node for the supplied parameters:")
+            log.error("browser: ${browser}")
+            log.error("Server Address: ${serverAddress}")
+            log.error("port: ${serverPort}")
+            log.error("platform: ${platform}")
+            log.error("browser version: ${version}")
+            throw new RuntimeException("Unable to successfully launch a ")
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.test.driver.Driver#createDriver(java.lang.String)
+     */
 	@Override
 	WebDriver createDriver() {
         log.info("entering createDriver of %s class", this.class.simpleName)
