@@ -3,6 +3,8 @@
  */
 package com.demo.POM.singleton.driver
 
+import groovy.transform.PackageScope
+import groovy.transform.PackageScopeTarget
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
 /**
@@ -11,6 +13,7 @@ import org.openqa.selenium.WebDriver
  */
 
 @Slf4j
+@PackageScope(PackageScopeTarget.CLASS)
 class MobileDriver extends DriverType {
     protected def device_name
     private def mobile_platform

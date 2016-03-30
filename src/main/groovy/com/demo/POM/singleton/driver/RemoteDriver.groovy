@@ -5,6 +5,8 @@
 package com.demo.POM.singleton.driver
 
 import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
+import groovy.transform.PackageScope
+import groovy.transform.PackageScopeTarget
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
@@ -17,6 +19,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
  */
 
 @Slf4j
+@PackageScope(PackageScopeTarget.CLASS)
 class RemoteDriver extends DriverType {
 	
 	public RemoteDriver() {

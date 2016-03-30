@@ -1,6 +1,8 @@
 package com.demo.POM.singleton.driver
 
 import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
+import groovy.transform.PackageScope
+import groovy.transform.PackageScopeTarget
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
@@ -19,6 +21,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
  */
 
 @Slf4j
+@PackageScope(PackageScopeTarget.CLASS)
 class LocalDriver extends DriverType {
 	
 	public LocalDriver() {
