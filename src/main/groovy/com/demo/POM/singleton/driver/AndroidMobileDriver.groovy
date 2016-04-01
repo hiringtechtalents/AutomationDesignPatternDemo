@@ -5,8 +5,8 @@ import groovy.transform.PackageScopeTarget
 import groovy.util.logging.Slf4j
 import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.remote.MobileCapabilityType
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.remote.DesiredCapabilities
-
 /**
  * Created by SANDEEP on 3/24/2016.
  */
@@ -14,17 +14,19 @@ import org.openqa.selenium.remote.DesiredCapabilities
 @PackageScope(PackageScopeTarget.CLASS)
 class AndroidMobileDriver extends MobileDriver {
 
-    public AndroidMobileDriver() {
-        super()
+    public AndroidMobileDriver(String serverAddress, int serverPort, String browser, String platform,
+                               String deviceName, String version) {
+        super(serverAddress, serverPort)
 
-        browser = config.seleniumConfigs.mobile.android.browser
-        device_name = config.seleniumConfigs.mobile.android.deviceName
-        platform = config.seleniumConfigs.mobile.android.platform
-        version = config.seleniumConfigs.mobile.android.platformVersion
+        this.browser = browser
+        device_name = deviceName
+        this.platform = platform
+        this.version = version
     }
 
-    def createAndroidDriver() {
-        log.info("entering createAndroidDriver method of %s class", this.class.simpleName)
+    @Override
+    WebDriver createDriver() {
+        log.info("entering createDriver method of %s class", this.class.simpleName)
         createCapabilities()
         def strCaps = "The following capabilities set for AndroidDriver:" +
                 "${caps.getCapability(MobileCapabilityType.AUTOMATION_NAME)}, ${caps.getBrowserName()}, " +

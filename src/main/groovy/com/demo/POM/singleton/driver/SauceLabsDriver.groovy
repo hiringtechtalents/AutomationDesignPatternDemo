@@ -15,8 +15,13 @@ import org.openqa.selenium.remote.RemoteWebDriver
 class SauceLabsDriver extends DriverType {
     private def userName, accessKey
 
-    public SauceLabsDriver(String userName, String accessKey, String serverAddress, int serverPort,
-                           String platform, String browser, String browserVersion) {
+    public SauceLabsDriver(String userName,
+                           String accessKey,
+                           String serverAddress,
+                           int serverPort,
+                           String platform,
+                           String browser,
+                           String browserVersion) {
         this.userName = userName
         this.accessKey = accessKey
         this.serverAddress = serverAddress

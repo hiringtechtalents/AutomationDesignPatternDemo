@@ -11,7 +11,7 @@ import org.openqa.selenium.remote.UnreachableBrowserException
 public final class WebDriverFactory {
     private def localDriverInstance, mobileDriverInstance, remoteDriverInstance, sauceLabsDriverInstance
 
-    private final config = FrameworkConfig.instance.config
+    private final def config = FrameworkConfig.instance.config
 
     private def browser = null
     private def platform = null
@@ -86,11 +86,40 @@ public final class WebDriverFactory {
 
     private def getMobileDriverInstance() {
         log.info("creating a singleton mobile driver instance ...")
+
+        serverAddress = config.seleniumConfigs.mobile.ip
+        serverPort = config.seleniumConfigs.mobile.port
+        def mobilePlatform = config.seleniumConfigs.mobile.mobile_platform
+        browser = config.seleniumConfigs.mobile.android.browser
+        platform = config.seleniumConfigs.mobile.android.platform
+        version = config.seleniumConfigs.mobile.android.platformVersion
+        def deviceName
+
         if (mobileDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
                 if (mobileDriverInstance == null) {
                     try {
-                        mobileDriverInstance = new MobileDriver().createDriver()
+                        log.info("creating driver of $mobilePlatform type")
+
+                        if ('android'.equalsIgnoreCase(mobilePlatform)) {
+                            deviceName = config.seleniumConfigs.mobile.android.deviceName
+                            mobileDriverInstance = createAndroidDriver(serverAddress,
+                                    serverPort,
+                                    browser,
+                                    platform,
+                                    deviceName,
+                                    version)
+                        } else if ('iOS'.equalsIgnoreCase(mobilePlatform)) {
+                            def deviceType = config.seleniumConfigs.mobile.ios.deviceType
+                            deviceName = config.seleniumConfigs.mobile.ios.deviceName
+                            mobileDriverInstance = createIOSDriver(serverAddress,
+                                    serverPort,
+                                    browser,
+                                    platform,
+                                    deviceName,
+                                    version,
+                                    deviceType)
+                        }
                     } catch (UnreachableBrowserException e) {
                         log.error("We were unable to contact the mobile device and/or launch the browser. Exception encountered: ${e}")
                         log.error("Please check if the correct appium port, host & browser were supplied ...")
@@ -103,20 +132,50 @@ public final class WebDriverFactory {
         mobileDriverInstance
     }
 
+    private static createAndroidDriver = { serverAddress, serverPort, browser, platform, deviceName, version ->
+        new AndroidMobileDriver(serverAddress,
+                serverPort as int,
+                browser,
+                platform,
+                deviceName,
+                version)
+                .createDriver()
+    }
+
+    private static createIOSDriver = { serverAddress, serverPort, browser, platform, deviceName, version, deviceType ->
+        new IOSMobileDriver(serverAddress,
+                serverPort as int,
+                browser,
+                platform,
+                deviceName,
+                version,
+                deviceType)
+                .createDriver()
+    }
+
     private def getSauceLabsDriverInstance() {
         log.info("creating a singleton Sauce driver instance ...")
 
-        browser = config.seleniumConfigs.sauceLabs.browser
         def userName = config.seleniumConfigs.sauceLabs.userName
         def accessKey = config.seleniumConfigs.sauceLabs.accessKey
-        platform = config.seleniumConfigs.sauceLabs.os
-        version = config.seleniumConfigs.sauceLabs.browserVersion
         serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
         serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
+        platform = config.seleniumConfigs.sauceLabs.os
+        browser = config.seleniumConfigs.sauceLabs.browser
+        version = config.seleniumConfigs.sauceLabs.browserVersion
 
         if (sauceLabsDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
-                if (sauceLabsDriverInstance == null) sauceLabsDriverInstance = new SauceLabsDriver().createDriver()
+                if (sauceLabsDriverInstance == null) {
+                    sauceLabsDriverInstance = new SauceLabsDriver(userName,
+                            accessKey,
+                            serverAddress,
+                            serverPort as int,
+                            platform,
+                            browser,
+                            version)
+                            .createDriver()
+                }
             }
         }
 
