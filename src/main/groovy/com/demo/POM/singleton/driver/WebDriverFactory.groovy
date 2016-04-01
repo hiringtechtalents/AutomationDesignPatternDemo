@@ -1,5 +1,6 @@
 package com.demo.POM.singleton.driver
 
+import com.demo.POM.singleton.base.FrameworkConfig
 import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.WebDriver
@@ -10,9 +11,17 @@ import org.openqa.selenium.remote.UnreachableBrowserException
 public final class WebDriverFactory {
     private def localDriverInstance, mobileDriverInstance, remoteDriverInstance, sauceLabsDriverInstance
 
+    private final config = FrameworkConfig.instance.config
+
+    private def browser = null
+    private def platform = null
+    private def version = null
+    private def serverAddress = null
+    private def serverPort = null
+
     private ThreadLocal<WebDriver> driver
 
-    public getDriver = { String driverType ->
+    public getDriver(String driverType) {
         log.info("Entering getDriver method with the param driverType: ${driverType}")
         driver = new ThreadLocal<WebDriver>() {
             @Override
@@ -44,9 +53,10 @@ public final class WebDriverFactory {
 
     private def getLocalDriverInstance() {
         log.info("creating a singleton local driver instance ...")
+        this.browser = config.seleniumConfigs.local.browser
         if (localDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
-                if (localDriverInstance == null) localDriverInstance = new LocalDriver().createDriver()
+                if (localDriverInstance == null) localDriverInstance = new LocalDriver(browser).createDriver()
             }
         }
 
@@ -55,6 +65,7 @@ public final class WebDriverFactory {
 
     private def getRemoteDriverInstance() {
         log.info("creating a singleton remote driver instance ...")
+
         if (remoteDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
                 if (remoteDriverInstance == null) remoteDriverInstance = new RemoteDriver().createDriver()

@@ -23,11 +23,9 @@ import org.openqa.selenium.remote.DesiredCapabilities
 @Slf4j
 @PackageScope(PackageScopeTarget.CLASS)
 class LocalDriver extends DriverType {
-	
-	public LocalDriver() {
-		super()
 
-        browser = config.seleniumConfigs.local.browser
+	public LocalDriver(String browser) {
+		this.browser = browser
 	}
 
 	/**

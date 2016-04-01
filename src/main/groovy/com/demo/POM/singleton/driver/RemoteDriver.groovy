@@ -45,7 +45,11 @@ class RemoteDriver extends DriverType {
 
             log.info("number of matching selenium server files: ${seleniumServer.size()}")
 
-        } catch (IllegalArgumentException | Exception e) {
+        } catch (final IllegalArgumentException e) {
+            log.error("Issues observed locating the selenium-server-standalone jar file")
+            log.error(e)
+            throw e
+        } catch (Exception e) {
             log.error("Issues observed locating the selenium-server-standalone jar file")
             log.error(e)
             throw e

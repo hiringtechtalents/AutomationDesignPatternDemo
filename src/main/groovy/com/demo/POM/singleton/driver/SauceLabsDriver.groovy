@@ -16,8 +16,6 @@ class SauceLabsDriver extends DriverType {
     private def userName, accessKey
 	
 	public SauceLabsDriver() {
-		super()
-
         browser = config.seleniumConfigs.sauceLabs.browser
         userName = config.seleniumConfigs.sauceLabs.userName
         accessKey = config.seleniumConfigs.sauceLabs.accessKey

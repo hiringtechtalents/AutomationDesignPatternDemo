@@ -19,8 +19,6 @@ class MobileDriver extends DriverType {
     private def mobile_platform
 	
 	public MobileDriver() {
-		super()
-
         serverAddress = config.seleniumConfigs.mobile.ip
         serverPort = config.seleniumConfigs.mobile.port
         mobile_platform = config.seleniumConfigs.mobile.mobile_platform
@@ -43,9 +41,6 @@ class MobileDriver extends DriverType {
         }
     }
 
-    @Override
-    protected createCapabilities() {}
-
     private createIOSDriver() {
         log.info("entering createIOSDriver of ${this.class.simpleName} class")
         // log.error("Unsupported driver type: ${platform}", new UnsupportedDriverTypeException())
@@ -58,4 +53,7 @@ class MobileDriver extends DriverType {
 
         return new AndroidMobileDriver().createAndroidDriver()
     }
+
+    @Override
+    protected createCapabilities() {}
 }
