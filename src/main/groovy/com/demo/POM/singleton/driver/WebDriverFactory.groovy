@@ -105,6 +105,15 @@ public final class WebDriverFactory {
 
     private def getSauceLabsDriverInstance() {
         log.info("creating a singleton Sauce driver instance ...")
+
+        browser = config.seleniumConfigs.sauceLabs.browser
+        def userName = config.seleniumConfigs.sauceLabs.userName
+        def accessKey = config.seleniumConfigs.sauceLabs.accessKey
+        platform = config.seleniumConfigs.sauceLabs.os
+        version = config.seleniumConfigs.sauceLabs.browserVersion
+        serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
+        serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
+
         if (sauceLabsDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
                 if (sauceLabsDriverInstance == null) sauceLabsDriverInstance = new SauceLabsDriver().createDriver()

@@ -14,15 +14,16 @@ import org.openqa.selenium.remote.RemoteWebDriver
 @PackageScope(PackageScopeTarget.CLASS)
 class SauceLabsDriver extends DriverType {
     private def userName, accessKey
-	
-	public SauceLabsDriver() {
-        browser = config.seleniumConfigs.sauceLabs.browser
-        userName = config.seleniumConfigs.sauceLabs.userName
-        accessKey = config.seleniumConfigs.sauceLabs.accessKey
-        platform = config.seleniumConfigs.sauceLabs.os
-        version = config.seleniumConfigs.sauceLabs.browserVersion
-        serverAddress = config.seleniumConfigs.sauceLabs.onDemand.server
-        serverPort = config.seleniumConfigs.sauceLabs.onDemand.port
+
+    public SauceLabsDriver(String userName, String accessKey, String serverAddress, int serverPort,
+                           String platform, String browser, String browserVersion) {
+        this.userName = userName
+        this.accessKey = accessKey
+        this.serverAddress = serverAddress
+        this.serverPort = serverPort
+        this.platform = platform
+        this.browser = browser
+        version = browserVersion
 	}
 
 	@Override

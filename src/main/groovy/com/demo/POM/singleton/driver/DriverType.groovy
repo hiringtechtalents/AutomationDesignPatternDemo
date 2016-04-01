@@ -22,8 +22,6 @@ abstract class DriverType {
 	protected def version = null
 	protected def serverAddress = null
 	protected def serverPort = null
-    // protected def config = FrameworkConfig.instance.config
-
 
     protected abstract WebDriver createDriver();
 
