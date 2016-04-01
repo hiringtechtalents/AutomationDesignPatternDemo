@@ -66,9 +66,18 @@ public final class WebDriverFactory {
     private def getRemoteDriverInstance() {
         log.info("creating a singleton remote driver instance ...")
 
+        this.browser = config.seleniumConfigs.remote.browser
+        this.serverAddress = config.seleniumConfigs.remote.ip
+        this.serverPort = config.seleniumConfigs.remote.port
+        this.version = config.seleniumConfigs.remote.version
+        this.platform = config.seleniumConfigs.remote.platform
+
         if (remoteDriverInstance == null) {
             synchronized (WebDriverFactory.class) {
-                if (remoteDriverInstance == null) remoteDriverInstance = new RemoteDriver().createDriver()
+                if (remoteDriverInstance == null) {
+                    remoteDriverInstance = new RemoteDriver(browser, serverAddress, serverPort as int, platform, version)
+                            .createDriver()
+                }
             }
         }
 

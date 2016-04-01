@@ -27,15 +27,13 @@ class RemoteDriver extends DriverType {
     private static String gridNodeLaunchCommand
 
     private static String windowsGridNodeLaunchCommand
-	
-	public RemoteDriver() {
-		super()
 
-		browser = config.seleniumConfigs.remote.browser
-		serverAddress = config.seleniumConfigs.remote.ip
-        serverPort = config.seleniumConfigs.remote.port
-		platform = config.seleniumConfigs.remote.platform
-		version = config.seleniumConfigs.remote.version
+    public RemoteDriver(String browser, String ip, int port, String platform, String version) {
+        this.browser = browser
+        serverAddress = ip
+        serverPort = port
+        this.platform = platform
+        this.version = version
 
         try {
             def seleniumServerDir = "${System.getProperty('user.dir')}/lib"
