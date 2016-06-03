@@ -1,4 +1,4 @@
-# SingletonPatternDemo
+# AutomationDesignPatternsDemo
 
 The project was started as self-learning about the various design patterns - singleton for this particular one. Since then it has evolved to include a few more patterns - Strategy and Factory method in particular.
 
