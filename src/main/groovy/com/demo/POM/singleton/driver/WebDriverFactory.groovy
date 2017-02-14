@@ -184,12 +184,13 @@ public final class WebDriverFactory {
 
     public void closeDriver() {
         log.info("Entering closeDriver method of ${this.class.simpleName} class")
-        log.info("quitting the current active WebDriver instance")
-        driver.get().quit()
+        log.info("quitting the current active WebDriver instance & setting it to null")
+                
+        WebDriver webDriver = driver.get()
+        webDriver.quit()
+        webDriver = null
 
         log.info("De-registering the WebDriver instance from ThreadLocal instance")
         driver.remove()
-
-        log.info("Exiting closeDriver method of ${this.class.simpleName} class")
     }
 }
