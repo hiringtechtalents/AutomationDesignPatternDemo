@@ -25,5 +25,11 @@ abstract class DriverType {
 
     protected abstract WebDriver createDriver();
 
-	protected abstract def createCapabilities();
+    protected abstract def createCapabilities();
+    
+    protected void killDriver() {
+	driver.close()
+	driver.quit()
+	driver = null
+    }
 }
