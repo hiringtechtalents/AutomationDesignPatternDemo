@@ -18,10 +18,12 @@ public final class WebDriverFactory {
     private def version = null
     private def serverAddress = null
     private def serverPort = null
+    private def driverType = null
 
     private ThreadLocal<WebDriver> driver
 
     public getDriver(String driverType) {
+        this.driverType = driverType
         log.info("Entering getDriver method with the param driverType: ${driverType}")
         driver = new ThreadLocal<WebDriver>() {
             @Override
@@ -187,8 +189,26 @@ public final class WebDriverFactory {
         log.info("quitting the current active WebDriver instance & setting it to null")
                 
         WebDriver webDriver = driver.get()
-        webDriver.quit()
-        webDriver = null
+        if (webDriver != null) {
+            switch (driverType) {
+                case "local":
+                    localDriver = null
+                    break
+                case "remote":
+                    remoteDriver = null
+                    break
+                case "mobile":
+                    mobileDriver = null
+                    break
+                default:
+                    try {
+                        throw new UnsupportedDriverTypeException("trying to kill unknown browser...")
+                    } catch (UnsupportedDriverTypeException e) {
+                        e.printStackTrace()
+                    }
+            }
+            webDriver.quit()
+        }
 
         log.info("De-registering the WebDriver instance from ThreadLocal instance")
         driver.remove()
