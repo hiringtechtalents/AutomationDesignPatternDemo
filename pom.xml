@@ -8,19 +8,34 @@
     <artifactId>SingletonPattern</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <groovy_version>2.5.2</groovy_version>
+        <selenium_version>3.14.0</selenium_version>
+        <logback_version>1.2.3</logback_version>
+        <slf4j_version>1.7.25</slf4j_version>
+        <testng_version>6.14.3</testng_version>
+        <saucelabs_testng>2.1.24</saucelabs_testng>
+        <hamcrest_version>1.3</hamcrest_version>
+        <wdm_version>3.0.0</wdm_version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.6.1</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>addSources</goal>
                             <goal>addTestSources</goal>
+                            <goal>generateStubs</goal>
                             <goal>compile</goal>
-                            <goal>testCompile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>compileTests</goal>
+                            <goal>removeStubs</goal>
+                            <goal>removeTestStubs</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -28,28 +43,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <groupId>com.simpligility.maven.plugins</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.8.2</version>
+                <version>4.3.0</version> <!-- use latest release -->
                 <extensions>true</extensions>
-                <configuration>
-                    <sdk>
-                        <platform>19</platform>
-                        <!-- assumes ANDROID_HOME environment variable is set and SDK matching this version is installed there -->
-                    </sdk>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
+                <version>2.22.0</version>
                 <configuration>
                     <parallel>classesAndMethods</parallel>
                     <threadCount>5</threadCount>
@@ -122,22 +131,23 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>2.4.5</version>
+            <version>${groovy_version}</version>
+            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.50.0</version>
+            <version>${selenium_version}</version>
         </dependency>
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>2.2.0</version>
+            <version>6.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.8.5</version>
+            <version>${testng_version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.android</groupId>
@@ -153,22 +163,32 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.14</version>
+            <version>${slf4j_version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.3</version>
+            <version>${logback_version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.1.3</version>
+            <version>${logback_version}</version>
         </dependency>
         <dependency>
             <groupId>com.saucelabs</groupId>
             <artifactId>sauce_testng</artifactId>
-            <version>2.1.18</version>
+            <version>${saucelabs_testng}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${wdm_version}</version>
         </dependency>
     </dependencies>
 </project>
