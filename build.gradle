@@ -8,23 +8,26 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.5'
-    compile 'org.seleniumhq.selenium:selenium-java:2.50.0'
-    compile 'io.appium:java-client:2.2.0'
+    compile 'org.codehaus.groovy:groovy-all:2.5.2'
+    compile 'org.seleniumhq.selenium:selenium-java:3.14.0'
+    compile 'io.appium:java-client:6.1.0'
     compile 'com.google.inject:guice:3.0'
-    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
-    // 'test.useTestNG()' to your build script.
-    compile 'org.testng:testng:6.8.5'
+
+    // webdrivermanager dependency
+    compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.0.0'
+
+    // add 'test.useTestNG()' to your build script.
+    compile 'org.testng:testng:6.14.3'
 
     // dependency for applitools eyes api.
     //compile 'com.applitools:eyes-selenium-java:2.22'
 
     // dependency for logback logging framework
-    compile 'ch.qos.logback:logback-classic:1.1.3'
-    compile 'ch.qos.logback:logback-core:1.1.3'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'ch.qos.logback:logback-core:1.2.3'
 
     // sauce-testng dependency to update test case results automatically
-    compile 'com.saucelabs:sauce_testng:2.1.18'
+    compile 'com.saucelabs:sauce_testng:2.1.24'
 }
 
 /*sourceSets.main.java.srcDirs = []
