@@ -4,6 +4,7 @@ import com.demo.POM.singleton.exceptions.UnsupportedDriverTypeException
 import groovy.transform.PackageScope
 import groovy.transform.PackageScopeTarget
 import groovy.util.logging.Slf4j
+import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
@@ -24,7 +25,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
 @PackageScope(PackageScopeTarget.CLASS)
 class LocalDriver extends DriverType {
 
-	public LocalDriver(String browser) {
+	LocalDriver(String browser) {
 		this.browser = browser
 	}
 
@@ -43,32 +44,21 @@ class LocalDriver extends DriverType {
             String path = null
 			if(browser.toLowerCase().contains("firefox")) {
                 log.info("browser firefox requested. Creating and returning an instance ...")
+				// using webdrivermanager library to create geckodriver instance
+				WebDriverManager.firefoxdriver().setup()
 				return new FirefoxDriver()
 			} else if (browser.toLowerCase().contains("chrome")) {
                 log.info("browser chrome requested.")
                 log.info("creating chrome driver instance for ${System.getProperty("os.name")} OS")
-				// if the OS the test is being run on is Windows then
-				// use the chromedriver.exe file for driver initialization
-				if (System.getProperty("os.name").contains("Windows")) {
-					path = createDriverIfDriverFileExists('chromedriver.exe')
-                    log.info("path of chromedriver executable: ${path}")
-                } else {
-                    // if the OS is not Windows
-                    // then set the path of the chrome driver to chromedriver
-                    path = createDriverIfDriverFileExists('chromedriver')
-                    log.info("path of chromedriver executable: ${path}")
-				}
 
-				System.setProperty("webdriver.chrome.driver", path)
+				// using webdrivermanager library to create chromedriver instance
+				WebDriverManager.chromedriver().setup()
 				return new ChromeDriver()
             } else if (browser.toLowerCase().contains("internet") && System.getProperty("os.name").contains("Windows")) {
                 log.info("browser IE requested. creating instance ...")
 
-                path = createDriverIfDriverFileExists("IEDriverServer.exe")
-                log.info("path of IEDriver executable: ${path}")
-
-                System.setProperty("webdriver.ie.driver", path)
-				createCapabilities()
+                // using webdrivermanager library to create IEDriver instance
+				WebDriverManager.iedriver().setup()
 				return new InternetExplorerDriver(caps)
 			} else if(browser.toLowerCase().contains("safari")) {
 				// TODO: yet to be implemented.
@@ -83,22 +73,9 @@ class LocalDriver extends DriverType {
 		}
 	}
 
+	/**
+	 * empty method implementation of the @DriverType#createCapabilities method
+	 */
 	@Override
-	protected def createCapabilities() {
-
-		if (browser.toLowerCase().contains("internet")) {
-            caps = DesiredCapabilities.internetExplorer()
-            caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true)
-        }
-
-	}
-	private createDriverIfDriverFileExists = { String driverFileName ->
-        def path = new File("${System.getProperty('user.dir')}/lib/${driverFileName}")
-        if (path.exists()) {
-			return path.toString()
-		} else {
-            log.info("${driverFileName} file could not be found at location: lib")
-            println "${driverFileName} file could not be found at location: lib"
-		}
-	}
+	protected def createCapabilities() {}
 }

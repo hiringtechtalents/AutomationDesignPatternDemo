@@ -24,14 +24,15 @@ class HomePage extends BasePageObject {
 
 	@Override
     protected By getUniqueElement() {
-        log.info("Look for unique element div.subheader for page ${this.class.simpleName}")
+        def homepageUniqueElement = "//a[contains(text(), 'Home') and contains(@class, 'nav-links')]"
+        log.info("Look for unique element ${homepageUniqueElement} for page ${this.class.simpleName}")
         try {
-            By.cssSelector("div.subheader")
+            By.xpath(homepageUniqueElement)
         } catch (InvalidSelectorException ise) {
             log.error("Malformed selector: #questions", ise)
             throw ise
         } catch (Exception e) {
-            log.error("Exception encountered on page ${this.class.simpleName}", e);
+            log.error("Exception encountered on page ${this.class.simpleName}", e)
             throw e;
         }
     }

@@ -20,10 +20,11 @@ class QuestionsPage extends BasePageObject {
 
 	@Override
 	protected By getUniqueElement() {
-        log.info("Look for unique element #questions for page ${this.class.simpleName}")
+        def questionsPageUniqueElement = "#questions"
+        log.info("Look for unique element ${questionsPageUniqueElement} for page ${this.class.simpleName}")
 
         try {
-            By.cssSelector("#questions")
+            By.cssSelector(questionsPageUniqueElement)
         } catch (InvalidSelectorException ise) {
             log.error("Malformed selector: #questions", ise)
             throw ise
