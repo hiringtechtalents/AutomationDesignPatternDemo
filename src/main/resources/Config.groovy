@@ -12,6 +12,15 @@ IMPLICITWAIT_TIMEOUT = 10
 // webdriverwait polling timeout in milliseconds
 WEBDRIVERWAIT_POLL = 10
 
+def credentials = new Properties()
+try {
+	InputStream propFile = new FileInputStream(System.getProperty("user.dir")+System.getProperty("file.separator")+"credentials.properties")
+	credentials.load(propFile)
+} catch(IOException | Exception e){
+	System.out.println("Encountered exception " + e + " while loading the credentials properties file!!!\n Please check whether the file" +
+			" exists in the path: " + System.getProperty("user.dir"))
+	e.printStackTrace()
+}
 
 seleniumConfigs {
 	local {
@@ -54,8 +63,8 @@ seleniumConfigs {
 		// the various Sauce properties are introduced by the SauceLabs
 		// onDemand jenkins plugin. Using these to set the desired properties/capabilities
 		// Set default values if the properties are not supplied.
-		userName = System.getProperty('SAUCE_USERNAME', 'sandeep-singh-79')
-		accessKey = System.getProperty('SAUCE_ACCESS_KEY', '7408dd07-3b3f-4b1e-95e1-f8676852922a')
+		userName = credentials.getProperty('SAUCE_USERNAME', 'sandeep-singh-79')
+		accessKey = credentials.getProperty('SAUCE_ACCESS_KEY')
 		os = System.getProperty('SELENIUM_PLATFORM', 'Windows 8')
 		browser = System.getProperty("BROWSER",'firefox')
 		browserVersion = System.getProperty('SELENIUM_VERSION', '42')
